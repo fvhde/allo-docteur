@@ -1,0 +1,21 @@
+App\Entity\Professional:
+  first_pro:
+    id (unique): '<uuid()>'
+    lastName: '<lastName()>'
+    firstName: '<firstName()>'
+    gender: 'M'
+    birthday: '<date_create()>'
+    email (unique): 'pro@fixture.com'
+    password: '$2y$13$O8l.wZcpRI6DlMFxm0/5S.aTCEPkWjBsYwBAoLwH7J7L34gpN5HBa'
+    place: '@place_paris'
+    roles: ['ROLE_USER']
+  second_pro:
+    id (unique): '<uuid()>'
+    lastName: '<lastName()>'
+    firstName: '<firstName()>'
+    gender: 'M'
+    birthday: '<date_create()>'
+    email (unique): 'pro_2@fixture.com'
+    password: '$2y$13$O8l.wZcpRI6DlMFxm0/5S.aTCEPkWjBsYwBAoLwH7J7L34gpN5HBa'
+    place: '@place_paris'
+    roles: ['ROLE_USER']
