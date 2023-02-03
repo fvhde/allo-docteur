@@ -1,0 +1,5 @@
+App\Entity\Place:
+  place_paris:
+    id (unique): 'a4a8678c-df7d-4804-bb4f-212df9397c04'
+    name: 'Chez Name'
+    phone: '0606060606'

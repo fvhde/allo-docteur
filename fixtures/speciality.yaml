@@ -1,0 +1,8 @@
+App\Entity\Speciality:
+  speciality_dentiste:
+    id: '6461eaa0-09cc-47b2-a776-f8d5448f5b0b'
+    name: 'Dentiste'
+
+  speciality_ophtalmo:
+    id: '6461eaa0-09cc-47b2-a776-f8d5448f5b0c'
+    name: 'Ophtalmo'

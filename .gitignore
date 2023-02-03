@@ -1,10 +1,13 @@
+.idea/*
+
 ###> symfony/framework-bundle ###
 /.env.local
 /.env.local.php
 /.env.*.local
 /config/secrets/prod/prod.decrypt.private.php
 /public/bundles/
-/var/
+/var/cache/
+/var/log/
 /vendor/
 ###< symfony/framework-bundle ###
 /.docker/.env.nginx.local
@@ -14,7 +17,13 @@
 .phpunit.result.cache
 ###< phpunit/phpunit ###
 
-###> symfony/phpunit-bridge ###
-.phpunit.result.cache
-/phpunit.xml
-###< symfony/phpunit-bridge ###
+
+###> lexik/jwt-authentication-bundle ###
+/var/jwt/*.pem
+###< lexik/jwt-authentication-bundle ###
+
+###> friendsofphp/php-cs-fixer ###
+/.php-cs-fixer.php
+/.php-cs-fixer.cache
+/.php_cs.cache
+###< friendsofphp/php-cs-fixer ###

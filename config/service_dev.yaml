@@ -1,0 +1,13 @@
+imports:
+  - { resource: ./services.yaml }
+
+services:
+  _defaults:
+    autowire: true      # Automatically injects dependencies in your services.
+    autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+
+  Symfony\Component\DependencyInjection\ContainerInterface: '@service_container'
+
+  App\DataFixtures\AppFixtures:
+    arguments:
+      $container: '@service_container'

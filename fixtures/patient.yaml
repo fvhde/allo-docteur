@@ -1,0 +1,10 @@
+App\Entity\Patient:
+  first_patient:
+    id (unique): '27b86925-c692-4a24-a2a4-2166848c810b'
+    lastName: '<lastName()>'
+    firstName: '<firstName()>'
+    gender: 'M'
+    roles: ['ROLE_USER']
+    birthday: '<date_create()>'
+    email (unique): 'dev@fixture.com'
+    password: '$2y$13$O8l.wZcpRI6DlMFxm0/5S.aTCEPkWjBsYwBAoLwH7J7L34gpN5HBa'
