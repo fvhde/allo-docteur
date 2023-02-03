@@ -19,7 +19,7 @@
 
 
 ###> lexik/jwt-authentication-bundle ###
-/var/jwt/*.pem
+/var/ssl/jwt/*.pem
 ###< lexik/jwt-authentication-bundle ###
 
 ###> friendsofphp/php-cs-fixer ###
