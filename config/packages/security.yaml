@@ -1,4 +1,11 @@
+parameters:
+    uuid_regex: ([0-9a-fA-F]){8}-([0-9a-fA-F]){4}-([0-9a-fA-F]){4}-([0-9a-fA-F]){4}-([0-9a-fA-F]){12}
+
 security:
+    role_hierarchy:
+        ROLE_ADMIN: [ ROLE_PROFESSIONAL ]
+        ROLE_PROFESSIONAL: [ ROLE_USER ]
+
     enable_authenticator_manager: true
 
     password_hashers:
@@ -11,6 +18,10 @@ security:
                 property: email
 
     firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
         password_reset:
             pattern: ^/forgot-password
             stateless: true
@@ -30,6 +41,16 @@ security:
             jwt: ~
 
     access_control:
+        - { path: ^/api/doc, roles: PUBLIC_ACCESS }
         - { path: ^/api/authenticate, roles: PUBLIC_ACCESS }
-        - { path: ^/forgot-password, role: PUBLIC_ACCESS }
-        - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/api/forgot-password, role: PUBLIC_ACCESS }
+        - { path: ^/api/places, role: PUBLIC_ACCESS }
+        - { path: ^/api/places/%uuid_regex%, role: PUBLIC_ACCESS, methods: [ GET ] }
+        - { path: ^/api/places/%uuid_regex%, role: [ ROLE_ADMIN ], methods: [ PATCH ] }
+        - { path: ^/api/patients, roles: PUBLIC_ACCESS, methods: [ POST ] }
+        - { path: ^/api/patients, roles: [ ROLE_PROFESSIONAL ], methods: [ GET ] }
+        - { path: ^/api/patients/%uuid_regex%, roles: [ ROLE_PROFESSIONAL ], methods: [ GET ] }
+        - { path: ^/api/professionals, roles: PUBLIC_ACCESS, methods: [ GET, POST ] }
+        - { path: ^/api/appointments, roles: [ ROLE_USER ] }
+        - { path: ^/api/me, roles: [ ROLE_USER ] }
+        - { path: ^/api, roles: [ ROLE_ADMIN ] }
