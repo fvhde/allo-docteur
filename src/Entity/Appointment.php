@@ -19,9 +19,12 @@ class Appointment
     #[ORM\Column(type: 'uuid')]
     #[ORM\GeneratedValue(strategy: 'CUSTOM')]
     #[ORM\CustomIdGenerator(class: 'doctrine.uuid_generator')]
+    #[Groups(['ap_list', 'ap_detail'])]
     private null|string|Uuid $id;
 
     #[ORM\Column(type: 'datetime')]
+    #[Assert\NotBlank(groups: ['ap_create'])]
+    #[Groups(['ap_create', 'ap_list', 'ap_detail'])]
     private \DateTimeInterface $date;
 
     #[ORM\Column(type: 'string', length: 100)]
@@ -32,21 +35,25 @@ class Appointment
 
     #[ORM\ManyToOne(targetEntity: Place::class)]
     #[ORM\JoinColumn(name: 'place_id', referencedColumnName: 'id')]
+    #[Assert\NotBlank(groups: ['ap_create'])]
+    #[Groups(['ap_create', 'ap_list', 'ap_detail'])]
     private Place $place;
 
     #[ORM\ManyToOne(targetEntity: Professional::class)]
     #[ORM\JoinColumn(name: 'professional_id', referencedColumnName: 'id')]
+    #[Assert\NotBlank(groups: ['ap_create'])]
     private Professional $professional;
 
     #[ORM\ManyToOne(targetEntity: Patient::class)]
     #[ORM\JoinColumn(name: 'patient_id', referencedColumnName: 'id')]
+    #[Assert\NotBlank(groups: ['ap_create'])]
     private Patient $patient;
 
     #[ORM\ManyToOne(targetEntity: Speciality::class)]
     #[ORM\JoinColumn(name: 'speciality_id', referencedColumnName: 'id')]
     private Speciality $speciality;
 
-    public function getId(): null|string|Uuid
+    public function getId(): ?string
     {
         return $this->id;
     }

@@ -34,7 +34,6 @@ final class ResourceCollectionBuilder
             'total' => $pager->getNbResults(),
             'limit' => $pager->getMaxPerPage(),
             'page' => $pager->getCurrentPage(),
-            'pages' => $pager->getNbPages(),
             'next' => ($pager->hasNextPage()) ? $pager->getNextPage() : null,
             'prev' => ($pager->hasPreviousPage()) ? $pager->getPreviousPage() : null,
         ];

@@ -17,6 +17,9 @@ class Professional extends User
     #[Groups(['pro_create', 'pro_detail'])]
     private Place $place;
 
+    /**
+     * @var string[]
+     */
     #[ORM\Column(type: 'json')]
     #[Groups(['pro_detail'])]
     private array $hours = [];

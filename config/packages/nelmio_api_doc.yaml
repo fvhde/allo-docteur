@@ -2,5 +2,109 @@ nelmio_api_doc:
   areas:
     path_patterns: # an array of regexps (document only routes under /api, except /api/doc)
       - ^/api(?!/doc$)
-    host_patterns: # document only routes with a host of the form api.*
-      - ^api\.
+  documentation:
+    servers:
+      - url: http://localhost:90
+        description: API over HTTP
+    info:
+      title: Doctor Appointments API
+      description: This is an rest api!
+      version: 1.0.0
+    components:
+      schemas:
+        Integer:
+          type: integer
+          example: 10
+      securitySchemes:
+        Bearer:
+          type: http
+          scheme: bearer
+          bearerFormat: JWT
+    security:
+      - Bearer: [ ]
+
+    paths:
+      /api/authenticate:
+        post:
+          tags:
+            - Authenticate
+          summary: Logging url.
+          requestBody:
+            description: get a JWT token
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    username:
+                      type: string
+                      default: admin@bookapi.com
+                    password:
+                      type: string
+                      default: password
+          responses:
+            200:
+              description: The JWT token
+              content:
+                application/json:
+                  schema:
+                    type: object
+                    properties:
+                      token:
+                        type: string
+                        readOnly: true
+      /api/forgot_password/:
+        post:
+          tags:
+            - Forgot Password
+          summary: Forgot password url.
+          requestBody:
+            description: Send a reset password link
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    email:
+                      type: string
+          responses:
+            204:
+              description: Email sent
+      /api/forgot_password/{tokenValue}:
+        get:
+          tags:
+            - Forgot Password
+          summary: Reset password url.
+          parameters:
+            - name: tokenValue
+              in: path
+              required: true
+              description: The token value
+              schema:
+                type: string
+          responses:
+            200:
+              description: The reset password form
+        post:
+          tags:
+            - Forgot Password
+          summary: Reset password url.
+          parameters:
+            - name: tokenValue
+              in: path
+              required: true
+              description: The token value
+              schema:
+                type: string
+          requestBody:
+            description: Send the new password
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    password:
+                      type: string
+          responses:
+            201:
+              description: Password changed

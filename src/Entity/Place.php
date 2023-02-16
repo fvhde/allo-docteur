@@ -21,19 +21,19 @@ class Place
     #[ORM\Column(type: 'uuid')]
     #[ORM\GeneratedValue(strategy: 'CUSTOM')]
     #[ORM\CustomIdGenerator(class: 'doctrine.uuid_generator')]
-    #[Groups(['place_list', 'pro_detail'])]
+    #[Groups(['pro_create', 'place_list', 'pro_detail'])]
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(['place_create', 'place_list', 'pro_detail'])]
+    #[Groups(['place_create', 'place_list', 'pro_detail', 'ap_list', 'ap_detail'])]
     private string $name;
 
     #[ORM\Column(type: 'string', length: 100, nullable: true)]
-    #[Groups(['place_create', 'place_list', 'pro_detail'])]
+    #[Groups(['place_create', 'place_list', 'pro_detail', 'ap_detail'])]
     private string $phone;
 
     #[ORM\Column(type: GeoPointType::POINT)]
-    #[Groups(['place_create', 'place_list', 'pro_detail'])]
+    #[Groups(['place_create', 'place_list', 'pro_detail', 'ap_detail'])]
     private GeoPoint $location;
 
     #[ORM\OneToMany(mappedBy: 'place', targetEntity: Professional::class)]
@@ -45,7 +45,7 @@ class Place
         $this->professionals = new ArrayCollection();
     }
 
-    public function getId()
+    public function getId(): ?string
     {
         return $this->id;
     }

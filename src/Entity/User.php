@@ -11,6 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Uid\Uuid;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
@@ -26,7 +27,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\GeneratedValue(strategy: 'CUSTOM')]
     #[ORM\CustomIdGenerator(class: 'doctrine.uuid_generator')]
     #[Groups(['user_list', 'user_detail'])]
-    private $id;
+    private null|string|Uuid $id;
 
     #[ORM\Column(type: 'string', length: 180, unique: true, nullable: true)]
     #[Assert\NotBlank(groups: ['user_create'])]
@@ -60,6 +61,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Groups(['user_create', 'user_detail'])]
     private \DateTimeInterface $birthday;
 
+    /**
+     * @var string[]
+     */
     #[ORM\Column(type: 'json')]
     #[Groups(['user_create'])]
     private array $roles = ['ROLE_USER'];
@@ -76,9 +80,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getId()
+    public function getId(): ?string
     {
-        return $this->id;
+        return (string) $this->id;
     }
 
     public function getEmail(): ?string
@@ -165,6 +169,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @see UserInterface
+     *
+     * @return string[]
      */
     public function getRoles(): array
     {
