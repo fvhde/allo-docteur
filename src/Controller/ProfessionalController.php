@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Builder\ResourceCollectionBuilder;
+use App\Entity\Place;
 use App\Entity\Professional;
 use Doctrine\ORM\EntityManagerInterface;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
@@ -120,7 +121,11 @@ final class ProfessionalController extends AbstractFOSRestController
         }
 
         $hashedPassword = $passwordHasher->hashPassword($professional, $professional->getPassword());
-        $professional->setPassword($hashedPassword);
+        $professional
+            ->setPlace($this->em->getRepository(Place::class)->find($professional->getPlace()->getId()))
+            ->setRoles(['ROLE_PROFESSIONAL'])
+            ->setPassword($hashedPassword)
+        ;
 
         $this->em->persist($professional);
         $this->em->flush();

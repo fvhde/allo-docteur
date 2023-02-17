@@ -26,12 +26,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'uuid')]
     #[ORM\GeneratedValue(strategy: 'CUSTOM')]
     #[ORM\CustomIdGenerator(class: 'doctrine.uuid_generator')]
-    #[Groups(['user_list', 'user_detail'])]
-    private null|string|Uuid $id;
+    #[Groups(['ap_create', 'user_list', 'user_detail'])]
+    protected null|string|Uuid $id;
 
     #[ORM\Column(type: 'string', length: 180, unique: true, nullable: true)]
     #[Assert\NotBlank(groups: ['user_create'])]
-    #[Assert\Type('email', groups: ['user_create'])]
+    #[Assert\Email(groups: ['user_create'])]
     #[Groups(['user_create', 'user_list', 'user_detail'])]
     private string $email;
 
@@ -42,17 +42,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: 'string', length: 150)]
     #[Assert\NotBlank(groups: ['user_create'])]
-    #[Groups(['user_create', 'user_list', 'user_detail'])]
+    #[Groups(['user_create', 'user_list', 'user_detail', 'ap_detail'])]
     private string $firstName;
 
     #[ORM\Column(type: 'string', length: 150)]
     #[Assert\NotBlank(groups: ['user_create'])]
-    #[Groups(['user_create', 'user_list', 'user_detail'])]
+    #[Groups(['user_create', 'user_list', 'user_detail', 'ap_detail'])]
     private string $lastName;
 
     #[ORM\Column(type: 'string', length: 10)]
     #[Assert\NotBlank(groups: ['user_create'])]
-    #[Assert\Choice(callback: [GenderEnum::class, 'array'], groups: ['user_create'])]
+    #[Assert\Choice(callback: [GenderEnum::class, 'values'], groups: ['user_create'])]
     #[Groups(['user_create', 'user_detail'])]
     private string $gender;
 
@@ -65,7 +65,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var string[]
      */
     #[ORM\Column(type: 'json')]
-    #[Groups(['user_create'])]
     private array $roles = ['ROLE_USER'];
 
     #[ORM\Column(type: 'string')]

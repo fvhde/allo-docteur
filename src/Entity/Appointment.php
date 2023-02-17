@@ -29,7 +29,7 @@ class Appointment
 
     #[ORM\Column(type: 'string', length: 100)]
     #[Assert\NotBlank(groups: ['ap_create'])]
-    #[Assert\Choice(callback: [StatusEnum::class, 'array'], groups: ['ap_create'])]
+    #[Assert\Choice(callback: [StatusEnum::class, 'values'], groups: ['ap_create'])]
     #[Groups(['ap_create', 'ap_detail'])]
     private string $status;
 
@@ -42,16 +42,24 @@ class Appointment
     #[ORM\ManyToOne(targetEntity: Professional::class)]
     #[ORM\JoinColumn(name: 'professional_id', referencedColumnName: 'id')]
     #[Assert\NotBlank(groups: ['ap_create'])]
+    #[Groups(['ap_create', 'ap_detail'])]
     private Professional $professional;
 
     #[ORM\ManyToOne(targetEntity: Patient::class)]
     #[ORM\JoinColumn(name: 'patient_id', referencedColumnName: 'id')]
     #[Assert\NotBlank(groups: ['ap_create'])]
+    #[Groups(['ap_create', 'ap_detail'])]
     private Patient $patient;
 
     #[ORM\ManyToOne(targetEntity: Speciality::class)]
     #[ORM\JoinColumn(name: 'speciality_id', referencedColumnName: 'id')]
+    #[Groups(['ap_create', 'ap_detail'])]
     private Speciality $speciality;
+
+    public function __construct()
+    {
+        $this->status = StatusEnum::CREATED->value;
+    }
 
     public function getId(): ?string
     {
@@ -114,6 +122,18 @@ class Appointment
     public function setSpeciality(Speciality $speciality): Appointment
     {
         $this->speciality = $speciality;
+
+        return $this;
+    }
+
+    public function getStatus(): string
+    {
+        return $this->status;
+    }
+
+    public function setStatus(string $status): self
+    {
+        $this->status = $status;
 
         return $this;
     }

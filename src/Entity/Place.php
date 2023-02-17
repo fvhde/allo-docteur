@@ -21,7 +21,7 @@ class Place
     #[ORM\Column(type: 'uuid')]
     #[ORM\GeneratedValue(strategy: 'CUSTOM')]
     #[ORM\CustomIdGenerator(class: 'doctrine.uuid_generator')]
-    #[Groups(['pro_create', 'place_list', 'pro_detail'])]
+    #[Groups(['ap_create', 'pro_create', 'place_list', 'pro_detail'])]
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
@@ -47,7 +47,7 @@ class Place
 
     public function getId(): ?string
     {
-        return $this->id;
+        return (string) $this->id;
     }
 
     public function setId($id)

@@ -19,10 +19,11 @@ class Speciality
     #[ORM\Column(type: 'uuid')]
     #[ORM\GeneratedValue(strategy: 'CUSTOM')]
     #[ORM\CustomIdGenerator(class: 'doctrine.uuid_generator')]
+    #[Groups(['ap_create', 'ap_detail'])]
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(['pro_detail'])]
+    #[Groups(['pro_detail', 'ap_detail'])]
     private string $name;
 
     #[ORM\Column(name: 'required_documents', type: 'json')]
@@ -39,7 +40,7 @@ class Speciality
     /**
      * @return mixed
      */
-    public function getId()
+    public function getId(): ?string
     {
         return $this->id;
     }
