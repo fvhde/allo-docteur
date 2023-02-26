@@ -1,7 +1,7 @@
 # Doctor Appointment rest api
 This is a simple rest api for doctor appointment. It is built using php, symfony 6 and docker.
 
-## Installation
+## BackEnd Installation
 1. Clone the repository
 2. Generate ssl certificates and place them in `var/ssl/jwt` directory
 3. copy `.env.dev` to `.env.dev.local`. This file is ignored by git and is used to override the default environment variables.
