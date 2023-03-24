@@ -1,8 +1,0 @@
-#!/usr/bin/env bash
-
-echo
-
-docker-compose run --rm ember ember $@
-
-echo
-echo
