@@ -1,7 +1,7 @@
-# Doctor Appointment rest api
-This is a simple rest api for doctor appointment. It is built using php, symfony 6 and docker.
+# Doctor Appointment System
+This is a simple system for doctor appointment. It is built using symfony 6 and docker.
 
-## BackEnd Installation
+## Setup the system
 1. Clone the repository
 2. Generate ssl certificates and place them in `var/ssl/jwt` directory
 3. copy `.env.dev` to `.env.dev.local`. This file is ignored by git and is used to override the default environment variables.
@@ -22,4 +22,8 @@ You should now have user with the following credentials:
 - role: `ROLE_PATIENT`
 
 ## Usage
-1. Visit `http://localhost:90/api/doc` to view the documentation, you can change port in `docker-compose.yml` file.
+1. Visit `http://localhost:90` to get into home page
+2. Visit `http://localhost:90/admin/login` to log as professional or admin user
+3. Visit `http://localhost:90/api/doc` to view the rest api documentation
+
+`90` is the default port, you can change it in `docker-compose.yml` file.

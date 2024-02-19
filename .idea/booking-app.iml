@@ -5,6 +5,7 @@
       <sourceFolder url="file://$MODULE_DIR$/spec" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/back/src" isTestSource="false" packagePrefix="App\" />
       <sourceFolder url="file://$MODULE_DIR$/back/tests" isTestSource="true" packagePrefix="App\Tests\" />
+      <sourceFolder url="file://$MODULE_DIR$/tests" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/back/vendor/theseer/tokenizer" />
       <excludeFolder url="file://$MODULE_DIR$/back/vendor/egulias/email-validator" />
       <excludeFolder url="file://$MODULE_DIR$/back/vendor/phpunit/php-timer" />
@@ -34,7 +35,6 @@
       <excludeFolder url="file://$MODULE_DIR$/back/vendor/phpdocumentor/reflection-docblock" />
       <excludeFolder url="file://$MODULE_DIR$/back/vendor/phpdocumentor/reflection-common" />
       <excludeFolder url="file://$MODULE_DIR$/back/vendor/phpdocumentor/type-resolver" />
-      <excludeFolder url="file://$MODULE_DIR$/back/vendor/laminas/laminas-code" />
       <excludeFolder url="file://$MODULE_DIR$/back/vendor/symfony/deprecation-contracts" />
       <excludeFolder url="file://$MODULE_DIR$/back/vendor/webmozart/assert" />
       <excludeFolder url="file://$MODULE_DIR$/back/vendor/symfony/dependency-injection" />
@@ -105,7 +105,6 @@
       <excludeFolder url="file://$MODULE_DIR$/back/vendor/nikic/php-parser" />
       <excludeFolder url="file://$MODULE_DIR$/back/vendor/symfony/routing" />
       <excludeFolder url="file://$MODULE_DIR$/back/vendor/symfony/event-dispatcher" />
-      <excludeFolder url="file://$MODULE_DIR$/back/vendor/friendsofphp/proxy-manager-lts" />
       <excludeFolder url="file://$MODULE_DIR$/back/vendor/symfony/error-handler" />
       <excludeFolder url="file://$MODULE_DIR$/back/vendor/symfony/notifier" />
       <excludeFolder url="file://$MODULE_DIR$/back/vendor/symfony/flex" />
@@ -162,11 +161,15 @@
       <excludeFolder url="file://$MODULE_DIR$/back/vendor/paknahad/querifier" />
       <excludeFolder url="file://$MODULE_DIR$/back/vendor/symfony/psr-http-message-bridge" />
       <excludeFolder url="file://$MODULE_DIR$/back/vendor/psr/http-factory" />
-      <excludeFolder url="file://$MODULE_DIR$/back/vendor/php-http/message-factory" />
       <excludeFolder url="file://$MODULE_DIR$/back/vendor/nyholm/psr7" />
       <excludeFolder url="file://$MODULE_DIR$/back/vendor/behat/transliterator" />
       <excludeFolder url="file://$MODULE_DIR$/back/vendor/gedmo/doctrine-extensions" />
       <excludeFolder url="file://$MODULE_DIR$/back/vendor/stof/doctrine-extensions-bundle" />
+      <excludeFolder url="file://$MODULE_DIR$/back/vendor/easycorp/easyadmin-bundle" />
+      <excludeFolder url="file://$MODULE_DIR$/back/vendor/symfony/asset-mapper" />
+      <excludeFolder url="file://$MODULE_DIR$/back/vendor/symfony/clock" />
+      <excludeFolder url="file://$MODULE_DIR$/back/vendor/symfony/polyfill-php83" />
+      <excludeFolder url="file://$MODULE_DIR$/back/vendor/symfonycasts/reset-password-bundle" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

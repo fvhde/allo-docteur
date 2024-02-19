@@ -1,0 +1,26 @@
+{% extends 'web/layout.html.twig' %}
+
+{% block title %}Reset your password{% endblock %}
+
+{% block main %}
+<div class="bg_color_2">
+    <div class="container margin_60_35">
+        <div id="login">
+            <h1>Reset your password</h1>
+            <div class="box_form">
+                {{ form_start(resetForm) }}
+                    <div class="form-group">
+                        <input type="password" name="{{ field_name(resetForm.plainPassword.first) }}" placeholder="{{ field_label(resetForm.plainPassword.first) }}" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" name="{{ field_name(resetForm.plainPassword.second) }}" placeholder="{{ field_label(resetForm.plainPassword.second) }}" class="form-control">
+                    </div>
+                    <div class="form-group text-center add_top_20">
+                        <button class="btn_1 medium" type="submit">Reset password</button>
+                    </div>
+                {{ form_end(resetForm) }}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
