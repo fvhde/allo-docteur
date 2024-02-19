@@ -1,4 +1,4 @@
-FROM php:8.1-fpm
+FROM php:8.2-fpm AS app
 ARG TIMEZONE
 
 COPY php.ini /usr/local/etc/php/conf.d/docker-php-config.ini
@@ -35,12 +35,3 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 
 WORKDIR /var/www/symfony
 
-#xdebug
-FROM app AS xdebug
-LABEL Name = "XDEBUG"
-ARG XDEBUG_VERSION=3.1.2
-RUN set -eux; \
-	apk add --no-cache --virtual .build-deps $PHPIZE_DEPS; \
-	pecl install xdebug-$XDEBUG_VERSION; \
-	docker-php-ext-enable xdebug; \
-	apk del .build-deps
