@@ -16,6 +16,7 @@
                     <div class="form-group">
                         <input type="password" class="form-control" placeholder="Your password" name="_password" id="password">
                     </div>
+                    <input type="hidden" name="_target_path" value="{{ path('app_home') }}">
                     <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
                     <a href="{{ path('app_forgot_password_request') }}"><small>Forgot password?</small></a>
                     <div class="form-group text-center add_top_20">

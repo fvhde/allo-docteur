@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Find easily a doctor and book online an appointment">
     <meta name="author" content="Fahde Sorgho">
-    <title>Tibse - Find easily a doctor and book online an appointment</title>
+    <title>{% block page_title %}{% endblock %}</title>
 
     <!-- Favicons-->
     <link rel="shortcut icon" href="{{ asset('assets/img/favicon.ico') }}" type="image/x-icon">
@@ -62,7 +62,7 @@
                         </li>
                         {% if not is_granted('ROLE_USER') %}
                             <li>
-                                <a href="{{ path('admin_login') }}">I am professional</a>
+                                <a href="{{ path('app_admin_login') }}">I am professional</a>
                             </li>
                         {% endif %}
                         {% if is_granted('ROLE_USER') %}
@@ -163,6 +163,7 @@
 <script src="{{ asset('assets/js/jquery-3.7.1.min.js') }}"></script>
 <script src="{{ asset('assets/js/common_scripts.min.js') }}"></script>
 <script src="{{ asset('assets/js/functions.js') }}"></script>
+{% block importmap %}{{ importmap('app') }}{% endblock %}
 
 </body>
 

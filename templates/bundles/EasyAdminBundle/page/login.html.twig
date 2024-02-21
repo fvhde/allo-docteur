@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Find easily a doctor and book online an appointment">
+    <meta name="author" content="Ansonika">
+    <title>Admin Section</title>
+
+    <!-- Favicons-->
+    <link rel="shortcut icon" href="{{ asset('assets/img/favicon.ico') }}" type="image/x-icon">
+
+    <!-- GOOGLE WEB FONT -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link href="{{ asset('assets/css/bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{ asset('assets/css/style.css')}}" rel="stylesheet">
+    <link href="{{ asset('assets/css/vendors.css')}}" rel="stylesheet">
+    <link href="{{ asset('assets/css/icon_fonts/css/all_icons_min.css')}}" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div id="preloader" class="Fixed">
+    <div data-loader="circle-side"></div>
+</div>
+<!-- /Preload-->
+
+<div id="page">
+    <main>
+        <div class="bg_color_2">
+            <div class="container margin_60_35">
+                <div id="login-2">
+                    <h1>Please login to Admin!</h1>
+                    <form method="post" action="{{ path('app_login') }}">
+                        <div class="box_form clearfix">
+                            <div class="box_login last">
+                                <div class="form-group">
+                                    <input id="username" name="_username" type="email" class="form-control" placeholder="Your email address">
+                                </div>
+                                <div class="form-group">
+                                    <input id="password" name="_password" type="password" class="form-control" placeholder="Your password">
+                                </div>
+                                <div class="form-group">
+                                    <label> <input type="checkbox" name="_remember_me">Keep me logged in</label>
+                                </div>
+                                <input type="hidden" name="_target_path" value="{{ path('admin_dashboard') }}">
+                                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                                <div class="form-group">
+                                    <input class="btn_1" type="submit" value="Login">
+                                </div>
+                                <a href="#0" class="forgot"><small>Forgot password?</small></a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <!-- /login -->
+            </div>
+        </div>
+    </main>
+    <!-- /main -->
+    <script src="{{ asset('assets/js/jquery-3.7.1.min.js') }}"></script>
+    <script src="{{ asset('assets/js/common_scripts.min.js') }}"></script>
+    <script src="{{ asset('assets/js/functions.js') }}"></script>
+    <script src="{{ asset('login.js', constant('EasyCorp\\Bundle\\EasyAdminBundle\\Asset\\AssetPackage::PACKAGE_NAME')) }}"></script>
+
+</div>
+<!-- page -->
+
+</body>
+</html>

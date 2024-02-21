@@ -16,29 +16,24 @@ class LoginController extends AbstractController
 {
     public function __construct(
         private readonly AuthenticationUtils $authenticationUtils,
-    ) { }
+    ) {}
 
-    #[Route('/admin/login', name: 'admin_login')]
+    #[Route('/admin/login', name: 'app_admin_login')]
     public function login(
         #[CurrentUser] ?User $currentUser,
         Request $request,
     ): Response {
-        if (null !== $currentUser) {
-            $this->redirectToRoute('admin_dashboard');
-        }
-
-        $error = $this->authenticationUtils->getLastAuthenticationError();
-        $lastUsername = $this->authenticationUtils->getLastUsername();
-
         // Check if the "_remember_me" parameter is present in the request
         $rememberMe = (bool) $request->get('_remember_me');
 
         // Check if the "REMEMBERME" cookie is present
         $hasRememberMeCookie = $request->cookies->has('REMEMBERME');
-        if ($hasRememberMeCookie) {
+        if ($currentUser || $hasRememberMeCookie) {
             return $this->redirectToRoute('admin_dashboard');
         }
 
+        $error = $this->authenticationUtils->getLastAuthenticationError();
+        $lastUsername = $this->authenticationUtils->getLastUsername();
         return $this->render('@EasyAdmin/page/login.html.twig', [
             // parameters usually defined in Symfony login forms
             'error' => $error,
