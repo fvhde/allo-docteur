@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Controller;
+namespace App\Controller\Api;
 
-use App\Builder\ResourceCollectionBuilder;
+use App\Builder\Api\ResourceCollectionBuilder;
 use App\Entity\Place;
 use App\Entity\Professional;
 use Doctrine\ORM\EntityManagerInterface;
