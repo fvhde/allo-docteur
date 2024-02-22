@@ -14,7 +14,6 @@ use Symfony\Component\Serializer\Annotation\Groups;
 class Speciality
 {
     use Timestampable;
-
     #[ORM\Id]
     #[ORM\Column(type: 'uuid')]
     #[ORM\GeneratedValue(strategy: 'CUSTOM')]

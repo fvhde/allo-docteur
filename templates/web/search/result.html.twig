@@ -66,9 +66,11 @@
                     <figure>
                         <a href="detail-page.html"><img src="http://via.placeholder.com/565x565.jpg" alt=""></a>
                     </figure>
-                    {% for speciality in professional.specialities %}
-                        <small>{{ speciality.name }}</small>
-                    {% endfor %}
+                    <div class="row">
+                        {% for speciality in professional.specialities %}
+                            <small class="col-md-2">{{ speciality.name }}</small>
+                        {% endfor %}
+                    </div>
                     <h3>Dr. {{ professional.firstname }} {{ professional.lastname }}</h3>
                     <p>Id placerat tacimates definitionem sea, prima quidam vim no. Duo nobis persecuti cuodo....</p>
                     <span class="rating"><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star"></i><i class="icon_star"></i> <small>(145)</small></span>

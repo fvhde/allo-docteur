@@ -45,6 +45,11 @@ class Place
         $this->professionals = new ArrayCollection();
     }
 
+    public function __toString(): string
+    {
+        return $this->name;
+    }
+
     public function getId(): ?string
     {
         return (string) $this->id;
