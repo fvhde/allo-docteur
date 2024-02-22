@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Controller;
+namespace App\Controller\Api;
 
-use App\Builder\ResourceCollectionBuilder;
-use App\Entity\Patient;
+use App\Builder\Api\ResourceCollectionBuilder;
+use App\Entity\Appointment;
 use Doctrine\ORM\EntityManagerInterface;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
@@ -14,13 +14,12 @@ use OpenApi\Attributes as OA;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 
-#[Route('/api/patients')]
-#[OA\Tag(name: 'Patients')]
-class PatientController extends AbstractFOSRestController
+#[Route('/api/appointments')]
+#[OA\Tag(name: 'Appointments')]
+class AppointmentController extends AbstractFOSRestController
 {
     public function __construct(private EntityManagerInterface $em)
     {
@@ -28,21 +27,21 @@ class PatientController extends AbstractFOSRestController
 
     #[OA\Parameter(
         name: 'id',
-        description: 'Patient id',
+        description: 'Appointment id',
         in: 'path',
         schema: new OA\Schema(type: 'string', format: 'uuid')
     )]
     #[OA\Response(
         response: 200,
-        description: 'Returns patient',
-        content: new OA\JsonContent(ref: new Model(type: Patient::class, groups: ['default', 'user_detail']))
+        description: 'Returns appointment',
+        content: new OA\JsonContent(ref: new Model(type: Appointment::class, groups: ['default', 'ap_detail']))
     )]
-    #[Rest\View(statusCode: 200, serializerGroups: ['default', 'user_detail'])]
+    #[Rest\View(statusCode: 200, serializerGroups: ['default', 'ap_detail'])]
     #[Route('/{id}', methods: ['GET'])]
-    #[ParamConverter('patient', class: Patient::class)]
-    public function getAction(Patient $patient): Patient
+    #[ParamConverter('appointment', class: Appointment::class)]
+    public function getAction(Appointment $appointment): Appointment
     {
-        return $patient;
+        return $appointment;
     }
 
     #[OA\Parameter(
@@ -59,7 +58,7 @@ class PatientController extends AbstractFOSRestController
     )]
     #[OA\Response(
         response: 200,
-        description: 'Returns patients list',
+        description: 'Returns appointments list',
         content: new OA\JsonContent(
             properties: [
                 new OA\Property(property: 'page', ref: '#/components/schemas/Integer'),
@@ -67,90 +66,67 @@ class PatientController extends AbstractFOSRestController
                 new OA\Property(property: 'total', ref: '#/components/schemas/Integer'),
                 new OA\Property(property: 'next', ref: '#/components/schemas/Integer'),
                 new OA\Property(property: 'prev', ref: '#/components/schemas/Integer'),
-                new OA\Property(
-                    property: 'items',
+                new OA\Property(property: 'items',
                     type: 'array',
-                    items: new OA\Items(ref: new Model(type: Patient::class, groups: ['default', 'user_list']))
-                ),
-            ],
-            type: 'object'
+                    items: new OA\Items(ref: new Model(type: Appointment::class, groups: ['default', 'ap_list']))
+                )]
         )
     )]
-    #[Rest\View(statusCode: 200, serializerGroups: ['default', 'user_list'])]
+    #[Rest\View(statusCode: 200, serializerGroups: ['default', 'ap_list'])]
     #[Route(methods: ['GET'])]
     public function cGetAction(Request $request): array
     {
         return ResourceCollectionBuilder::build(
-            $this->em->getRepository(Patient::class)->createQueryBuilder('p'),
+            $this->em->getRepository(Appointment::class)->createQueryBuilder('a'),
             $request
         );
     }
 
     #[OA\RequestBody(
-        description: 'Patient data',
+        description: 'Appointment data',
         required: true,
-        content: new OA\JsonContent(ref: new Model(type: Patient::class, groups: ['user_create']))
+        content: new OA\JsonContent(ref: new Model(type: Appointment::class, groups: ['ap_create']))
     )]
     #[OA\Response(
         response: 201,
-        description: 'Returns created patient',
-        content: new OA\JsonContent(ref: new Model(type: Patient::class, groups: ['user_detail']))
+        description: 'Returns created appointment',
+        content: new OA\JsonContent(ref: new Model(type: Appointment::class, groups: ['ap_detail']))
     )]
-    #[Rest\View(statusCode: 201, serializerGroups: ['user_detail'])]
+    #[Rest\View(statusCode: 201, serializerGroups: ['ap_detail'])]
     #[Route(methods: ['POST'])]
-    #[ParamConverter(
-        'patient',
-        options: [
-            'deserializationContext' => ['groups' => ['user_create']],
-            'validator' => ['groups' => ['user_create']],
-        ],
-        converter: 'fos_rest.request_body')
-    ]
-    public function postAction(
-        Patient $patient,
-        ConstraintViolationListInterface $validationErrors,
-        UserPasswordHasherInterface $passwordHasher
-    ): Patient {
+    #[ParamConverter('appointment', options: ['deserializationContext' => ['groups' => ['ap_create']], 'validator' => ['groups' => ['ap_create']]], converter: 'fos_rest.request_body')]
+    public function postAction(Appointment $appointment, ConstraintViolationListInterface $validationErrors): Appointment
+    {
         if (count($validationErrors) > 0) {
             throw new BadRequestHttpException($validationErrors->__toString());
         }
 
-        $hashedPassword = $passwordHasher->hashPassword($patient, $patient->getPassword());
-        $patient->setPassword($hashedPassword);
-
-        $this->em->persist($patient);
+        $this->em->persist($appointment);
         $this->em->flush();
 
-        return $patient;
+        return $appointment;
     }
 
     #[OA\Parameter(
         name: 'id',
-        description: 'Patient id',
+        description: 'Appointment id',
         in: 'path',
         schema: new OA\Schema(type: 'string', format: 'uuid')
     )]
     #[OA\RequestBody(
-        description: 'Patient data',
+        description: 'Appointment data',
         required: true,
-        content: new OA\JsonContent(ref: new Model(type: Patient::class, groups: ['user_update']))
+        content: new OA\JsonContent(ref: new Model(type: Appointment::class, groups: ['ap_update']))
     )]
     #[OA\Response(
         response: 204,
-        description: 'Patient updated'
+        description: 'Appointment updated'
     )]
     #[Rest\View(statusCode: 204)]
     #[Route('/{id}', methods: ['PATCH'])]
-    #[ParamConverter('patient', class: Patient::class)]
-    #[ParamConverter(
-        'updated',
-        options: [
-            'deserializationContext' => ['groups' => ['user_update']],
-            'validator' => ['groups' => ['user_update']],
-        ],
-        converter: 'fos_rest.request_body')
-    ]
-    public function patchAction(Patient $patient, Patient $updated, ConstraintViolationListInterface $validationErrors)
+    #[ParamConverter('appointment', class: Appointment::class)]
+    #[ParamConverter('updated', options: ['deserializationContext' => ['groups' => ['ap_update']], 'validator' => ['groups' => ['ap_update']]], converter: 'fos_rest.request_body')]
+    public function patchAction(Appointment $appointment, Appointment $updated, ConstraintViolationListInterface $validationErrors): void
     {
         if (count($validationErrors) > 0) {
             throw new BadRequestHttpException($validationErrors->__toString());
@@ -161,15 +137,19 @@ class PatientController extends AbstractFOSRestController
 
     #[OA\Parameter(
         name: 'id',
-        description: 'Patient id',
+        description: 'Appointment id',
         in: 'path',
         schema: new OA\Schema(type: 'string', format: 'uuid')
     )]
+    #[OA\Response(
+        response: 204,
+        description: 'Appointment deleted'
+    )]
     #[Rest\View(statusCode: 204)]
     #[Route('/{id}', methods: ['DELETE'])]
-    public function deleteAction(Patient $patient)
+    public function deleteAction(Appointment $appointment): void
     {
-        $this->em->remove($patient);
+        $this->em->remove($appointment);
         $this->em->flush();
     }
 }

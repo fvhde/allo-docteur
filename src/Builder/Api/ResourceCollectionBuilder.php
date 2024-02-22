@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Builder;
+namespace App\Builder\Api;
 
 use Doctrine\ORM\QueryBuilder;
 use Pagerfanta\Adapter\ArrayAdapter;

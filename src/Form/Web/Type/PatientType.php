@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Form\Type;
+namespace App\Form\Web\Type;
 
 use App\Entity\Patient;
 use Symfony\Component\Form\AbstractType;

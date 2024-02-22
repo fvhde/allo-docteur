@@ -22,6 +22,11 @@ doctrine:
                 dir: '%kernel.project_dir%/src/Entity'
                 prefix: 'App\Entity'
                 alias: App
+            Bridge:
+                is_bundle: false
+                dir: '%kernel.project_dir%/src/Bridge'
+                prefix: 'App\Bridge'
+                alias: Bridge
 
 when@test:
     doctrine:

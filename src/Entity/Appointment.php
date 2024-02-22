@@ -25,7 +25,12 @@ class Appointment
     #[ORM\Column(type: 'datetime')]
     #[Assert\NotBlank(groups: ['ap_create'])]
     #[Groups(['ap_create', 'ap_list', 'ap_detail'])]
-    private \DateTimeInterface $date;
+    private \DateTimeInterface $beginAt;
+
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    #[Assert\NotBlank(groups: ['ap_create'])]
+    #[Groups(['ap_create', 'ap_list', 'ap_detail'])]
+    private ?\DateTimeInterface $endAt = null;
 
     #[ORM\Column(type: 'string', length: 100)]
     #[Assert\NotBlank(groups: ['ap_create'])]
@@ -66,14 +71,26 @@ class Appointment
         return $this->id;
     }
 
-    public function getDate(): ?\DateTimeInterface
+    public function getBeginAt(): ?\DateTimeInterface
     {
-        return $this->date;
+        return $this->beginAt;
     }
 
-    public function setDate(\DateTimeInterface $date): self
+    public function setBeginAt(\DateTimeInterface $beginAt): self
     {
-        $this->date = $date;
+        $this->beginAt = $beginAt;
+
+        return $this;
+    }
+
+    public function getEndAt(): ?\DateTimeInterface
+    {
+        return $this->endAt;
+    }
+
+    public function setEndAt(?\DateTimeInterface $endAt): Appointment
+    {
+        $this->endAt = $endAt;
 
         return $this;
     }
