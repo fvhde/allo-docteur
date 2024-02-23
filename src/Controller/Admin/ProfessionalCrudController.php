@@ -26,12 +26,13 @@ class ProfessionalCrudController extends AbstractCrudController
             TextField::new('firstName')->setColumns(5),
             TextField::new('lastName')->setColumns(5),
             AssociationField::new('place')->setColumns(5),
-            CollectionField::new('specialities')
-                ->useEntryCrudForm()
-                ->allowAdd()
-                ->allowDelete()
-                ->hideOnIndex()
+            AssociationField::new('specialities')
                 ->setColumns(5)
+                ->setFormTypeOptions([
+                    'multiple' => true,
+                ])
+                ->setFormTypeOption('by_reference', false)
+                ->onlyOnForms()
         ];
     }
 
@@ -45,6 +46,8 @@ class ProfessionalCrudController extends AbstractCrudController
 
     public function configureFilters(Filters $filters): Filters
     {
-        return $filters->add(TextFilter::new('firstName', 'FirstName'));
+        return $filters
+            ->add(TextFilter::new('firstName', 'FirstName'))
+            ->add(TextFilter::new('lastName', 'LastName'));
     }
 }

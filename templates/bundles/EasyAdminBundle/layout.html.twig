@@ -63,7 +63,8 @@
         </nav>
         <!-- /Navigation-->
         {% set has_search = ea.crud is not null and ea.crud.isSearchEnabled %}
-        <aside class="content-top {{ has_search ? 'ea-search-enabled' : 'ea-search-disabled' }}">
+        {% if has_search %}
+            <aside class="content-top {{ has_search ? 'ea-search-enabled' : 'ea-search-disabled' }}">
             {% block content_top_header %}
                 {% block search_wrapper %}
                     <div class="content-search">
@@ -124,6 +125,7 @@
                 {% endblock search_wrapper %}
             {% endblock content_top_header %}
         </aside>
+        {% endif %}
         <div class="content-wrapper">
             {% block content %}
                 <div class="container-fluid">
