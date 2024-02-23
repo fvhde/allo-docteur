@@ -9,9 +9,11 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Assets;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
+use EasyCorp\Bundle\EasyAdminBundle\Config\UserMenu;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class DashboardController extends AbstractDashboardController
 {
@@ -40,11 +42,18 @@ class DashboardController extends AbstractDashboardController
         return Dashboard::new()->setTitle('Tibse Admin');
     }
 
-    public function configureMenuItems(): iterable
+    public function configureUserMenu(UserInterface $user): UserMenu
     {
-        yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
-        yield MenuItem::linkToCrud('Appointment', 'fa fa-list', Appointment::class);
-        yield MenuItem::linkToCrud('Professional', 'fa fa-list', Professional::class);
-        yield MenuItem::linkToCrud('Specialities', 'fa fa-stethoscope', Speciality::class);
+
+        return UserMenu::new()
+            ->setName($user->getFirstName())
+            ->displayUserAvatar(false)
+            ->addMenuItems([
+                MenuItem::linkToDashboard('Dashboard', 'fa fa-home'),
+                MenuItem::linkToCrud('Appointment', 'fa fa-list', Appointment::class),
+                MenuItem::linkToCrud('Professional', 'fa fa-list', Professional::class)->setPermission('ROLE_ADMIN'),
+                MenuItem::linkToCrud('Specialities', 'fa fa-stethoscope', Speciality::class)->setPermission('ROLE_ADMIN'),
+                MenuItem::linkToRoute('Profile', 'fa fa-id-card', 'app_admin_edit_profile', ['uuid' => $user->getId()])
+            ]);
     }
 }

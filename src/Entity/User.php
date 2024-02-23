@@ -22,6 +22,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     use Timestampable;
 
+    public function __toString(): string
+    {
+        return $this->firstName.' '.$this->lastName;
+    }
+
     #[ORM\Id]
     #[ORM\Column(type: 'uuid')]
     #[ORM\GeneratedValue(strategy: 'CUSTOM')]

@@ -2,9 +2,9 @@
     <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
         {% block main_menu %}
             <!-- Change with userMenu when auth is done -->
-            {% for item in ea.mainMenu.items %}
+            {% for item in ea.userMenu.items %}
                 {% block menu_item %}
-                    <li class="nav-item {{ item.isSelected ? 'active' }}" data-toggle="tooltip" data-placement="right" title="Dashboard">
+                    <li class="nav-item {{ item.isSelected ? 'active' }}" data-toggle="tooltip" data-placement="right" title="{{ item.label }}">
                         <a class="nav-link" href="{{ item.linkUrl }}">
                             <i class="{{ item.icon }}"></i>
                             <span class="nav-link-text">{{ item.label }}</span>

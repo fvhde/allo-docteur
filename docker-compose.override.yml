@@ -6,3 +6,17 @@ version: '3'
 #    image: schickling/mailcatcher
 #    ports: [1025, 1080]
 ###< symfony/mailer ###
+services:
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: pma
+    environment:
+      PMA_HOST: db
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    restart: always
+    ports:
+      - 8081:80
+    depends_on:
+      - db
+    networks:
+      - booking

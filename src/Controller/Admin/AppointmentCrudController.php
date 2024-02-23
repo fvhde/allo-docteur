@@ -5,9 +5,8 @@ namespace App\Controller\Admin;
 use App\Entity\Appointment;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
 class AppointmentCrudController extends AbstractCrudController
 {
@@ -20,8 +19,12 @@ class AppointmentCrudController extends AbstractCrudController
     {
         return [
             IdField::new('id')->hideOnIndex()->hideOnForm(),
-            DateField::new('date'),
-            AssociationField::new('place'),
+            DateTimeField::new('beginAt')->setColumns(5),
+            DateTimeField::new('endAt')->setColumns(5),
+            AssociationField::new('place')->setColumns(5),
+            AssociationField::new('professional')->setColumns(5),
+            AssociationField::new('patient')->setColumns(5),
+            AssociationField::new('speciality')->setColumns(5),
         ];
     }
 }

@@ -4,7 +4,6 @@ namespace App\Controller\Admin;
 
 use App\Entity\Professional;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
-use EasyCorp\Bundle\EasyAdminBundle\Config\Option\SearchMode;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
@@ -24,14 +23,15 @@ class ProfessionalCrudController extends AbstractCrudController
     {
         return [
             IdField::new('id')->hideOnIndex()->hideOnForm(),
-            TextField::new('firstName'),
-            TextField::new('lastName'),
-            AssociationField::new('place'),
+            TextField::new('firstName')->setColumns(5),
+            TextField::new('lastName')->setColumns(5),
+            AssociationField::new('place')->setColumns(5),
             CollectionField::new('specialities')
-                ->setEntryIsComplex()
+                ->useEntryCrudForm()
                 ->allowAdd()
                 ->allowDelete()
                 ->hideOnIndex()
+                ->setColumns(5)
         ];
     }
 

@@ -6,7 +6,7 @@ App\Entity\Professional:
     gender: 'M'
     birthday: '<date_create()>'
     email (unique): 'pro@fixture.com'
-    password: '$2y$13$O8l.wZcpRI6DlMFxm0/5S.aTCEPkWjBsYwBAoLwH7J7L34gpN5HBa'
+    password: '2y13O8l'
     place: '@place_paris'
     roles: ['ROLE_PROFESSIONAL']
   second_pro:
@@ -16,6 +16,6 @@ App\Entity\Professional:
     gender: 'M'
     birthday: '<date_create()>'
     email (unique): 'pro_2@fixture.com'
-    password: '$2y$13$O8l.wZcpRI6DlMFxm0/5S.aTCEPkWjBsYwBAoLwH7J7L34gpN5HBa'
+    password: '2y13O8l'
     place: '@place_paris'
     roles: ['ROLE_PROFESSIONAL']

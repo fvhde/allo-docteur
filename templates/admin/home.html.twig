@@ -73,12 +73,43 @@
             <!-- /cards -->
             <h2></h2>
             <div class="box_general padding_bottom">
-                <div class="header_box version_2">
-                    <h2><i class="fa fa-bar-chart"></i>Statistic</h2>
-                </div>
-                <canvas id="myAreaChart" width="100%" height="30" style="margin:45px 0 15px 0;"></canvas>
+                <div id="calendar-holder"></div>
             </div>
         </div>
         <!-- /.container-fluid-->
     </div>
 {% endblock %}
+{% block body_javascript %}
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.5/index.global.min.js" integrity="sha256-dHUNnePy81fXq4D/wfu7cPsEIP7zl6MvLb84jtZf+UY=" crossorigin="anonymous"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            var calendarEl = document.getElementById('calendar-holder');
+
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                height: 800,
+                defaultView: 'dayGridMonth',
+                editable: true,
+                eventSources: [
+                    {
+                        url: "/fc-load-events",
+                        method: "POST",
+                        extraParams: {
+                            filters: JSON.stringify({})
+                        },
+                        failure: () => {
+                            // alert("There was an error while fetching FullCalendar!");
+                        },
+                    },
+                ],
+                headerToolbar: {
+                    start: 'prev,next today',
+                    center: 'title',
+                    end: 'dayGridMonth,timeGridWeek,timeGridDay'
+                },
+                timeZone: 'UTC',
+            });
+            calendar.render();
+        });
+    </script>
+{% endblock body_javascript %}
+

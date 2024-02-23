@@ -1091,9 +1091,3 @@ select.form-control:not([size]):not([multiple]) {
 .sbOptions .sbSub {
   padding-left: 17px;
 }
-
-.form-check-input {
-  position: relative;
-  margin-top: 0.25rem;
-  margin-left: -1.25rem;
-}
