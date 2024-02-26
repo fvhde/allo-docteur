@@ -60,7 +60,7 @@ class Professional extends User
         return $this;
     }
 
-    public function getHours(): Hours
+    public function getHours(): ?Hours
     {
         return $this->hours;
     }

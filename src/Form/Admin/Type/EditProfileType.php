@@ -29,6 +29,7 @@ final class EditProfileType extends AbstractType
                 'label_attr' => ['class' => 'form-control-label'],
                 'attr' => ['class' => 'form-control col-md-3']
             ])
+            ->add('description', TextType::class)
             ->add('gender', ChoiceType::class, [
                 'choices' => ['male' => 'male', 'female' => 'female'],
             ])
@@ -42,6 +43,10 @@ final class EditProfileType extends AbstractType
                 'attr' => ['class' => 'save'],
             ])
         ;
+
+        foreach (DayHoursType::DAYS as $day) {
+            $builder->add($day, DayHoursType::class, ['mapped' => false]);
+        }
     }
     public function configureOptions(OptionsResolver $resolver): void
     {

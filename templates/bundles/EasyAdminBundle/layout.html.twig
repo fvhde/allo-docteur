@@ -49,7 +49,20 @@
 {% block body %}
     <body class="fixed-nav sticky-footer sidenav-toggled" id="{% block body_id %}{% endblock %}">
         {% block flash_messages %}
-            {{ include(ea.templatePath('flash_messages')) }}
+            {% for label, messages in app.session.getFlashBag.all %}
+                {% for message in messages %}
+                    <div class="position-fixed top-1 end-0 p-3" style="z-index: 11">
+                        <div class="toast align-items-center show" role="alert" aria-live="assertive" aria-atomic="true">
+                            <div class="d-flex">
+                                <div class="toast-body success">
+                                    {{ message }}
+                                </div>
+                                <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endfor %}
         {% endblock flash_messages %}
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-dark bg-default fixed-top" id="mainNav">

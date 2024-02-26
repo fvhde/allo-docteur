@@ -30,13 +30,12 @@
 
 <div id="page">
     <main>
-        <div class="bg_color_2">
+        <div class="bg_color_2" style="height: 100vh;">
             <div class="container margin_60_35">
-                <div id="login-2">
+                <div id="login">
                     <h1>Please login to Admin!</h1>
                     <form method="post" action="{{ path('app_login') }}">
-                        <div class="box_form clearfix">
-                            <div class="box_login last">
+                        <div class="box_form">
                                 <div class="form-group">
                                     <input id="username" name="_username" type="email" class="form-control" placeholder="Your email address">
                                 </div>
@@ -44,16 +43,15 @@
                                     <input id="password" name="_password" type="password" class="form-control" placeholder="Your password">
                                 </div>
                                 <div class="form-group">
-                                    <label> <input type="checkbox" name="_remember_me">Keep me logged in</label>
+                                    <label> <input type="checkbox" name="_remember_me" class="form-check-inline">Keep me logged in</label>
                                 </div>
                                 <input type="hidden" name="_target_path" value="{{ path('admin_dashboard') }}">
                                 <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-                                <div class="form-group">
+                                <div class="form-group text-center add_top_20">
                                     <input class="btn_1" type="submit" value="Login">
                                 </div>
                                 <a href="#0" class="forgot"><small>Forgot password?</small></a>
                             </div>
-                        </div>
                     </form>
                 </div>
                 <!-- /login -->
