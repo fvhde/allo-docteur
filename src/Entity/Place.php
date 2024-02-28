@@ -39,6 +39,9 @@ class Place
     #[ORM\OneToMany(mappedBy: 'place', targetEntity: Professional::class)]
     private Collection $professionals;
 
+    #[ORM\ManyToOne(targetEntity: City::class, cascade: ['persist', 'remove'])]
+    private City $city;
+
     public function __construct()
     {
         $this->location = new GeoPoint(0, 0);
@@ -107,6 +110,17 @@ class Place
     {
         $this->professionals = $professionals;
 
+        return $this;
+    }
+
+    public function getCity(): City
+    {
+        return $this->city;
+    }
+
+    public function setCity(City $city): Place
+    {
+        $this->city = $city;
         return $this;
     }
 }
