@@ -10,7 +10,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\IdGenerator\UuidGenerator;
 use Symfony\Component\Serializer\Annotation\Groups;
 
-
 #[ORM\Entity]
 class City
 {
@@ -18,16 +17,14 @@ class City
     #[ORM\Column(type: 'uuid')]
     #[ORM\GeneratedValue(strategy: 'CUSTOM')]
     #[ORM\CustomIdGenerator(class: UuidGenerator::class)]
-    #[Groups(['ap_create', 'pro_create', 'place_list', 'pro_detail'])]
+    #[Groups(['city_list'])]
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(['place_create', 'place_list', 'pro_detail', 'ap_list', 'ap_detail'])]
+    #[Groups(['city_list'])]
     private string $name;
 
-
     #[ORM\Column(type: GeoPointType::POINT)]
-    #[Groups(['place_create', 'place_list', 'pro_detail', 'ap_detail'])]
     private GeoPoint $location;
 
     /**

@@ -64,6 +64,7 @@ security:
         - { path: ^/api/patients, roles: [ ROLE_PROFESSIONAL ], methods: [ GET ] }
         - { path: ^/api/patients/%uuid_regex%, roles: [ ROLE_PROFESSIONAL ], methods: [ GET ] }
         - { path: ^/api/professionals, roles: PUBLIC_ACCESS, methods: [ GET, POST ] }
+        - { path: ^/api/cities, roles: PUBLIC_ACCESS, methods: [ GET ] }
         - { path: ^/api/appointments, roles: [ ROLE_USER ] }
         - { path: ^/api/me, roles: [ ROLE_USER ] }
         - { path: ^/api, roles: [ ROLE_ADMIN ] }

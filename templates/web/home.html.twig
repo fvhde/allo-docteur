@@ -3,52 +3,31 @@
 {% block main %}
 <div class="hero_home version_1">
     <div class="content">
-        <h3>Find a Doctor!</h3>
+        <h3>Trouvez un médecin!</h3>
         <p>
             Ridiculus sociosqu cursus neque cursus curae ante scelerisque vehicula.
         </p>
-        <form method="post" action="{{ path('app_search_professionals') }}">
+            {{ form_start(form) }}
             <div id="custom-search-input">
                 <div class="input-group">
                     <table>
                         <tbody>
                             <tr>
                                 <td>
-                                    <input type="text" name="term" class="search-query" placeholder="Ex. Name, Specialization ....">
+                                    {{ form_row(form.speciality) }}
                                 </td>
                                 <td>
-                                    <input type="text" name="location" class="search-query" placeholder="Where ?">
-                                    <ul class="nav" id="side-menu">
-                                        <li>
-                                            <a href="#"> Entities<span class="fa arrow"></span></a>
-                                            <ul class="nav nav-second-level" id="entitiesNav">
-                                            </ul>
-                                        </li>
-                                    </ul>
+                                    {{ form_row(form.city) }}
                                 </td>
                                 <td>
-                                    <input type="submit" class="btn_search" value="Search">
+                                    <input type="submit" class="btn_search" style="position: relative;" value="Search">
                                 </td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
-                <ul>
-                    <li>
-                        <input type="radio" id="all" name="radio_search" value="all" checked>
-                        <label for="all">All</label>
-                    </li>
-                    <li>
-                        <input type="radio" id="doctor" name="radio_search" value="doctor">
-                        <label for="doctor">Doctor</label>
-                    </li>
-                    <li>
-                        <input type="radio" id="clinic" name="radio_search" value="clinic">
-                        <label for="clinic">Specialities</label>
-                    </li>
-                </ul>
             </div>
-        </form>
+            {{ form_end(form) }}
     </div>
 </div>
 <!-- /Hero -->
@@ -216,46 +195,4 @@
     </div>
     <!-- /container -->
 </div>
-{% endblock %}
-{% block script %}
-    <script type="text/javascript">
-        jQuery(document).ready(function() {
-            let searchRequest = null;
-            $("#search").keyup(function() {
-                let minlength = 3;
-                let that = this;
-                let value = $(this).val();
-                let entitySelector = $("#entitiesNav").html('');
-                if (value.length >= minlength ) {
-                    if (searchRequest != null)
-                        searchRequest.abort();
-                    searchRequest = $.ajax({
-                        type: "GET",
-                        url: "{{ path('localhost:90/api/specialities') }}",
-                        data: {
-                            'q' : value
-                        },
-                        dataType: "text",
-                        success: function(msg){
-                            //we need to check if the value is the same
-                            if (value==$(that).val()) {
-                                let result = JSON.parse(msg);
-                                $.each(result, function(key, arr) {
-                                    $.each(arr, function(id, value) {
-                                        if (key == 'entities') {
-                                            if (id != 'error') {
-                                                entitySelector.append('<li><a href="/daten/'+id+'">'+value+'</a></li>');
-                                            } else {
-                                                entitySelector.append('<li class="errorLi">'+value+'</li>');
-                                            }
-                                        }
-                                    });
-                                });
-                            }
-                        }
-                    });
-                }
-            });
-        });
-    </script>
 {% endblock %}

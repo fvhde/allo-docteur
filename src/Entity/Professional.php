@@ -6,6 +6,7 @@ namespace App\Entity;
 
 use App\Bridge\Hours\Hours;
 use App\Entity\Professional\ProfessionalSpeciality;
+use App\Entity\ValueObject\Image;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -16,6 +17,9 @@ class Professional extends User
 {
     #[ORM\Column(type: 'text')]
     private ?string $description = null;
+
+    #[ORM\Embedded(class: Image::class, columnPrefix: 'pro_')]
+    private ?Image $avatar = null;
 
     #[ORM\ManyToOne(targetEntity: Place::class, inversedBy: 'professionals')]
     #[ORM\JoinColumn(name: 'place_id', referencedColumnName: 'id')]
@@ -100,6 +104,18 @@ class Professional extends User
             $this->specialities->remove($s);
             $s->setProfessional(null);
         }
+
+        return $this;
+    }
+
+    public function getAvatar(): ?Image
+    {
+        return $this->avatar;
+    }
+
+    public function setAvatar(?Image $avatar): Professional
+    {
+        $this->avatar = $avatar;
 
         return $this;
     }

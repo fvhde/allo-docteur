@@ -4,17 +4,8 @@ declare(strict_types=1);
 
 namespace DoctrineMigrations;
 
-use App\Entity\City;
-use App\Entity\ValueObject\GeoPoint;
-use App\Type\Doctrine\GeoPointType;
-use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\Migrations\AbstractMigration;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Mapping\Entity;
-use Psr\Log\LoggerInterface;
-use Symfony\Component\Uid\Uuid;
 
 /**
  * Auto-generated Migration: Please modify to your needs!
@@ -494,13 +485,12 @@ final class Version20240228185524 extends AbstractMigration
     {
         foreach (self::CITIES as $city) {
             //dd(sprintf('INSERT INTO city(id, name, location) VALUES (\'%s\', \'%s\', GeometryFromText(\'POINT(%s, %s)\'))', Uuid::v4()->toBinary(), $city['name'], floatval($city['latitude']), floatval($city['longitude'])));
-            $this->addSql(sprintf('INSERT INTO city(id, name, location) VALUES (UNHEX(REPLACE(%s, "-","")), \'%s\', GeometryFromText(\'POINT(%s, %s)\'))', Uuid::v4(), $city['name'], floatval($city['latitude']), floatval($city['longitude'])));
+            $this->addSql(sprintf('INSERT INTO city(id, name, location) VALUES (UNHEX(REPLACE(UUID(), \'-\', \'\')), \'%s\', ST_GeomFromText(\'POINT(%f, %f)\'))', $city['name'], floatval($city['latitude']), floatval($city['longitude'])));
         }
     }
 
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
-
     }
 }
