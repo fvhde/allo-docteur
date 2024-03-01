@@ -29,6 +29,7 @@ security:
                 login_path: app_login
                 check_path: app_login
                 enable_csrf: true
+                failure_path: login_failure_route_name
             logout:
                 path: /logout
             remember_me:

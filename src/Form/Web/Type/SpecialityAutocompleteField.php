@@ -20,7 +20,8 @@ final class SpecialityAutocompleteField extends AbstractType
             'label' => false,
             'placeholder' => 'Une specialité ?',
             'searchable_fields' => ['name'],
-            'choice_label' => 'name'
+            'choice_label' => 'name',
+            'attr' => ['style' => 'width: 200px']
         ]);
     }
 

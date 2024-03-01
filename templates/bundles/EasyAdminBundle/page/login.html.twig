@@ -46,6 +46,7 @@
                                     <label> <input type="checkbox" name="_remember_me" class="form-check-inline">Keep me logged in</label>
                                 </div>
                                 <input type="hidden" name="_target_path" value="{{ path('admin_dashboard') }}">
+                                <input type="hidden" name="_failure_path" value="{{ path('app_admin_login') }}">
                                 <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
                                 <div class="form-group text-center add_top_20">
                                     <input class="btn_1" type="submit" value="Login">

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
-use App\Bridge\Hours\Hours;
 use App\Entity\Professional\ProfessionalSpeciality;
 use App\Entity\ValueObject\Image;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -18,7 +17,7 @@ class Professional extends User
     #[ORM\Column(type: 'text')]
     private ?string $description = null;
 
-    #[ORM\Embedded(class: Image::class, columnPrefix: 'pro_')]
+    #[ORM\Embedded(class: Image::class, columnPrefix: 'avatar_')]
     private ?Image $avatar = null;
 
     #[ORM\ManyToOne(targetEntity: Place::class, inversedBy: 'professionals')]
@@ -26,9 +25,9 @@ class Professional extends User
     #[Groups(['pro_create', 'pro_detail'])]
     private ?Place $place = null;
 
-    #[ORM\OneToOne(targetEntity: Hours::class, cascade: ['persist', 'remove'])]
+    #[ORM\Column(type: 'simple_array')]
     #[Groups(['pro_detail'])]
-    private ?Hours $hours = null;
+    private ?array $hours = null;
 
     #[ORM\OneToMany(mappedBy: 'professional', targetEntity: ProfessionalSpeciality::class)]
     #[Groups(['pro_detail'])]
@@ -64,12 +63,12 @@ class Professional extends User
         return $this;
     }
 
-    public function getHours(): ?Hours
+    public function getHours(): ?array
     {
         return $this->hours;
     }
 
-    public function setHours(Hours $hours): Professional
+    public function setHours(array $hours): Professional
     {
         $this->hours = $hours;
 

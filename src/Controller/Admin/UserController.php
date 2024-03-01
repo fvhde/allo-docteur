@@ -4,15 +4,10 @@ declare(strict_types=1);
 
 namespace App\Controller\Admin;
 
-use App\Bridge\Hours\Hours;
 use App\Entity\Professional;
-use App\Entity\User;
 use App\Form\Admin\Type\DayHoursType;
 use App\Form\Admin\Type\EditProfileType;
 use Doctrine\ORM\EntityManagerInterface;
-use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
-use Symfony\Bridge\Doctrine\Attribute\MapEntity;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -52,7 +47,6 @@ final class UserController extends DashboardController
             $hours[$day] = [$data['edit_profile'][$day]['from'].'-'.$data['edit_profile'][$day]['to']];
         }
 
-        $user->getHours()->fill($hours);
-
+        $user->setHours($hours);
     }
 }

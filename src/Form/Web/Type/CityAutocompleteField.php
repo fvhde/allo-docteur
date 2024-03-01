@@ -20,7 +20,8 @@ final class CityAutocompleteField extends AbstractType
             'label' => false,
             'placeholder' => 'Ou ?',
             'searchable_fields' => ['name'],
-            'choice_label' => 'name'
+            'choice_label' => 'name',
+            'attr' => ['style' => 'width: 170px']
         ]);
     }
 

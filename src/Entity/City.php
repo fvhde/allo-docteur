@@ -24,9 +24,6 @@ class City
     #[Groups(['city_list'])]
     private string $name;
 
-    #[ORM\Column(type: GeoPointType::POINT)]
-    private GeoPoint $location;
-
     /**
      * @return mixed
      */
