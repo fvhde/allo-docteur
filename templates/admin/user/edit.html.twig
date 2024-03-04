@@ -91,105 +91,105 @@
                         <div class="row">
                             <div class="col-md-1">
                                 <div class="form-group">
-                                    <input type="checkbox" name="{{ field_name(form.hours.0.opened) }}" {{ field_value(form.hours.0.opened) ? 'checked' : '' }}>
+                                    <input type="checkbox" name="{{ field_name(form.hours.0.opened) }}" {% if form.hours.0.vars.value.opened %} checked {% endif %}>
                                     <label>Lundi</label>
                                 </div>
                             </div>
                             <div class="col-md-2">
                                 <div class="form-group">
-                                    <input type="time" name="{{ field_name(form.hours.0.from) }}" value="{{ field_value(form.hours.0.from) }}">
+                                    <input type="time" name="{{ field_name(form.hours.0.from_time) }}" value="{{ field_value(form.hours.0.from_time) }}">
                                      à
-                                    <input type="time" name="{{ field_name(form.hours.0.to) }}" value="{{ field_value(form.hours.0.to) }}">
+                                    <input type="time" name="{{ field_name(form.hours.0.to_time) }}" value="{{ field_value(form.hours.0.to_time) }}">
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-1">
                                 <div class="form-group">
-                                    <input type="checkbox" name="{{ field_name(form.hours.1.opened) }}" {{ field_value(form.hours.1.opened) ? 'checked' : '' }}>
+                                    <input type="checkbox" name="{{ field_name(form.hours.1.opened) }}" {% if form.hours.1.vars.value.opened %} checked {% endif %}>
                                     <label>Mardi</label>
                                 </div>
                             </div>
                             <div class="col-md-2">
                                 <div class="form-group">
-                                    <input type="time" name="{{ field_name(form.hours.1.from) }}" value="{{ field_value(form.hours.1.from) }}">
+                                    <input type="time" name="{{ field_name(form.hours.1.from_time) }}" value="{{ field_value(form.hours.1.from_time) }}">
                                      à
-                                    <input type="time" name="{{ field_name(form.hours.1.to) }}" value="{{ field_value(form.hours.1.to) }}">
+                                    <input type="time" name="{{ field_name(form.hours.1.to_time) }}" value="{{ field_value(form.hours.1.to_time) }}">
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-1">
                                 <div class="form-group">
-                                    <input type="checkbox" name="{{ field_name(form.hours.2.opened) }}" {{ field_value(form.hours.2.opened) ? 'checked' : '' }}>
+                                    <input type="checkbox" name="{{ field_name(form.hours.2.opened) }}" {% if form.hours.2.vars.value.opened %} checked {% endif %}>
                                     <label>Mercredi</label>
                                 </div>
                             </div>
                             <div class="col-md-2">
                                 <div class="form-group">
-                                    <input type="time" name="{{ field_name(form.hours.2.from) }}" value="{{ field_value(form.hours.2.from) }}">
+                                    <input type="time" name="{{ field_name(form.hours.2.from_time) }}" value="{{ field_value(form.hours.2.from_time) }}">
                                      à
-                                    <input type="time" name="{{ field_name(form.hours.2.to) }}" value="{{ field_value(form.hours.2.to) }}">
+                                    <input type="time" name="{{ field_name(form.hours.2.to_time) }}" value="{{ field_value(form.hours.2.to_time) }}">
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-1">
                                 <div class="form-group">
-                                    <input type="checkbox" name="{{ field_name(form.hours.3.opened) }}" {{ field_value(form.hours.3.opened) ? 'checked' : '' }}>
+                                    <input type="checkbox" name="{{ field_name(form.hours.3.opened) }}" {% if form.hours.3.vars.value.opened %} checked {% endif %}>
                                     <label>jeudi</label>
                                 </div>
                             </div>
                             <div class="col-md-2">
                                 <div class="form-group">
-                                    <input type="time" name="{{ field_name(form.hours.3.from) }}" value="{{ field_value(form.hours.3.from) }}">
+                                    <input type="time" name="{{ field_name(form.hours.3.from_time) }}" value="{{ field_value(form.hours.3.from_time) }}">
                                      à
-                                    <input type="time" name="{{ field_name(form.hours.3.to) }}" value="{{ field_value(form.hours.3.to) }}">
+                                    <input type="time" name="{{ field_name(form.hours.3.to_time) }}" value="{{ field_value(form.hours.3.to_time) }}">
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-1">
                                 <div class="form-group">
-                                    <input type="checkbox" name="{{ field_name(form.hours.4.opened) }}" {{ field_value(form.hours.4.opened) ? 'checked' : '' }}>
+                                    <input type="checkbox" name="{{ field_name(form.hours.4.opened) }}" {% if form.hours.4.vars.value.opened %} checked {% endif %}>
                                     <label>Vendredi</label>
                                 </div>
                             </div>
                             <div class="col-md-2">
                                 <div class="form-group">
-                                    <input type="time" name="{{ field_name(form.hours.4.from) }}" value="{{ field_value(form.hours.4.from) }}">
+                                    <input type="time" name="{{ field_name(form.hours.4.from_time) }}" value="{{ field_value(form.hours.4.from_time) }}">
                                      à
-                                    <input type="time" name="{{ field_name(form.hours.4.to) }}" value="{{ field_value(form.hours.4.to) }}">
+                                    <input type="time" name="{{ field_name(form.hours.4.to_time) }}" value="{{ field_value(form.hours.4.to_time) }}">
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-1">
                                 <div class="form-group">
-                                    <input type="checkbox" name="{{ field_name(form.hours.5.opened) }}" {{ field_value(form.hours.5.opened) ? 'checked' : '' }}>
+                                    <input type="checkbox" name="{{ field_name(form.hours.5.opened) }}" {% if form.hours.5.vars.value.opened %} checked {% endif %}>
                                     <label>Samedi</label>
                                 </div>
                             </div>
                             <div class="col-md-2">
                                 <div class="form-group">
-                                    <input type="time" name="{{ field_name(form.hours.5.from) }}" value="{{ field_value(form.hours.5.from) }}">
+                                    <input type="time" name="{{ field_name(form.hours.5.from_time) }}" value="{{ field_value(form.hours.5.from_time) }}">
                                      à
-                                    <input type="time" name="{{ field_name(form.hours.5.to) }}" value="{{ field_value(form.hours.5.to) }}">
+                                    <input type="time" name="{{ field_name(form.hours.5.to_time) }}" value="{{ field_value(form.hours.5.to_time) }}">
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-1">
                                 <div class="form-group">
-                                    <input type="checkbox" name="{{ field_name(form.hours.6.opened) }}" {{ field_value(form.hours.6.opened) ? 'checked' : '' }}>
+                                    <input type="checkbox" name="{{ field_name(form.hours.6.opened) }}" {% if form.hours.6.vars.value.opened %} checked {% endif %}>
                                     <label>Dimanche</label>
                                 </div>
                             </div>
                             <div class="col-md-2">
                                 <div class="form-group">
-                                    <input type="time" name="{{ field_name(form.hours.6.from) }}" value="{{ field_value(form.hours.6.from) }}">
+                                    <input type="time" name="{{ field_name(form.hours.6.from_time) }}" value="{{ field_value(form.hours.6.from_time) }}">
                                      à
-                                    <input type="time" name="{{ field_name(form.hours.6.to) }}" value="{{ field_value(form.hours.6.to) }}">
+                                    <input type="time" name="{{ field_name(form.hours.6.to_time) }}" value="{{ field_value(form.hours.6.to_time) }}">
                                 </div>
                             </div>
                         </div>

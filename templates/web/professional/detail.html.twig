@@ -13,7 +13,7 @@
                         <img src=" {{ professional.avatar ? asset(professional.avatar) : 'http://via.placeholder.com/565x565.jpg' }}" alt="" class="img-fluid">
                     </figure>
                     <small>Primary care - Internist</small>
-                    <h1>DR. Julia Jhones</h1>
+                    <h1>{{ professional.firstname }} {{ professional.lastname }}</h1>
                     <span class="rating">
 							<i class="icon_star voted"></i>
 							<i class="icon_star voted"></i>
@@ -35,9 +35,7 @@
                 </div>
             </aside>
             <!-- /asdide -->
-
             <div class="col-xl-9 col-lg-8">
-
                 <div class="box_general_2 add_bottom_45">
                     <div class="main_title_4">
                         <h3><i class="icon_circle-slelected"></i>Select your date and time</h3>
@@ -113,12 +111,14 @@
                         <h3><i class="icon_circle-slelected"></i>Select visit - treatment</h3>
                     </div>
                     <ul class="treatments clearfix">
+                        {% for speciality in professional.specialities %}
                         <li>
                             <div class="checkbox">
-                                <input type="checkbox" class="css-checkbox" id="visit1" name="visit1">
-                                <label for="visit1" class="css-label">Back Pain visit <strong>$55</strong></label>
+                                <input type="checkbox" class="css-checkbox" id="speciality" name="visit1">
+                                <label for="visit1" class="css-label">{{ speciality.name }}</label>
                             </div>
                         </li>
+                        {% endfor %}
                         <li>
                             <div class="checkbox">
                                 <input type="checkbox" class="css-checkbox" id="visit2" name="visit2">
@@ -163,8 +163,15 @@
                         </li>
                     </ul>
                     <hr>
-                    <div class="text-center"><a href="booking-page.html" class="btn_1 medium">Book Now</a></div>
+                    {{ form_start(form) }}
+                        <input type="hidden" name="{{ field_name(form.professional) }}" value="{{ professional.id }}">
+                        <input type="hidden" name="{{ field_name(form.speciality) }}">
+                        <input type="hidden" name="{{ field_name(form.beginAt) }}">
+
+                        <div class="text-center"><a type="submit" href="{{ path('app_create_appointment') }}" class="btn_1 medium">Book Now</a></div>
+                    {{ form_end(form) }}
                 </div>
+
                 <!-- /box_general -->
 
                 <div class="tabs_styled_2">
@@ -435,8 +442,6 @@
                 format: "dd-mm-yyyy",
             }).on('changeDate', function (e) {
                 console.log(e.date);
-                // Update the value of the hidden input when the date changes
-                $('#my_hidden_input').val(e.date);
             });
         </script>
     {% endblock %}

@@ -212,7 +212,9 @@
                 document.addEventListener('DOMContentLoaded', function() {
                     const messages = {{ app.session.getFlashBag.all|json_encode()|raw }};
                     if (messages !== []) {
-                        messages.success.forEach(e => toastr.success(e));
+                        let t = toastr;
+                        t.options.progressBar = true;
+                        messages.success.forEach(e => t.success(e));
                     }
                 });
             </script>

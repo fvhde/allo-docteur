@@ -16,8 +16,8 @@ class DayHoursType extends AbstractType
     {
         $builder
             ->add('opened', CheckboxType::class)
-            ->add('from', TimeType::class, ['widget' => 'single_text'])
-            ->add('to', TimeType::class, ['widget' => 'single_text'])
+            ->add('from_time', TimeType::class, ['widget' => 'single_text'])
+            ->add('to_time', TimeType::class, ['widget' => 'single_text'])
         ;
     }
 

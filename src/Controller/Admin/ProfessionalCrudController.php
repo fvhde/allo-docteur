@@ -31,7 +31,6 @@ class ProfessionalCrudController extends AbstractCrudController
                 ->setFormTypeOptions([
                     'multiple' => true,
                 ])
-                ->setFormTypeOption('by_reference', false)
                 ->onlyOnForms()
         ];
     }

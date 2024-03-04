@@ -16,6 +16,9 @@ return [
         'path' => './assets/app.js',
         'entrypoint' => true,
     ],
+    '@symfony/stimulus-bundle' => [
+        'path' => './vendor/symfony/stimulus-bundle/assets/dist/loader.js',
+    ],
     '@hotwired/stimulus' => [
         'version' => '3.2.2',
     ],
@@ -25,8 +28,5 @@ return [
     'tom-select/dist/css/tom-select.default.css' => [
         'version' => '2.3.1',
         'type' => 'css',
-    ],
-    '@symfony/stimulus-bundle' => [
-        'path' => './vendor/symfony/stimulus-bundle/assets/dist/loader.js',
     ],
 ];

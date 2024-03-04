@@ -25,10 +25,10 @@ final class OpeningHour
     private bool $opened = false;
 
     #[ORM\Column(nullable: true)]
-    private ?string $from;
+    private ?string $fromTime;
 
     #[ORM\Column(nullable: true)]
-    private ?string $to;
+    private ?string $toTime;
 
     #[ORM\ManyToOne(targetEntity: Professional::class, inversedBy: 'hours')]
     #[ORM\JoinColumn(name: 'professional_id', referencedColumnName: 'id')]
@@ -67,43 +67,42 @@ final class OpeningHour
         return $this;
     }
 
-    public function getFrom(): ?\DateTime
+    public function getFromTime(): ?\DateTime
     {
-        if (!$this->from) {
-            return $this->from;
+        if (!$this->fromTime) {
+            return $this->fromTime;
         }
 
-        return \DateTime::createFromFormat('H:i', $this->from);
+        return \DateTime::createFromFormat('H:i', $this->fromTime);
     }
 
-    public function setFrom(null|\DateTimeInterface|string $from): OpeningHour
+    public function setFromTime(null|\DateTimeInterface|string $from): OpeningHour
     {
         if ($from instanceof \DateTimeInterface) {
-            $this->from = $from->format('H:i');
+            $this->fromTime = $from->format('H:i');
         } else {
-            $this->from = $from;
+            $this->fromTime = $from;
         }
 
         return $this;
     }
 
-    public function getTo(): ?\DateTime
+    public function getToTime(): ?\DateTime
     {
-        if (!$this->to) {
-            return $this->to;
+        if (!$this->toTime) {
+            return $this->toTime;
         }
 
-        return \DateTime::createFromFormat('H:i', $this->to);
+        return \DateTime::createFromFormat('H:i', $this->toTime);
     }
 
-    public function setTo(null|\DateTimeInterface|string $to): OpeningHour
+    public function setToTime(null|\DateTimeInterface|string $to): OpeningHour
     {
         if ($to instanceof \DateTimeInterface) {
-            $this->to = $to->format('H:i');
+            $this->toTime = $to->format('H:i');
         } else {
-            $this->to = $to;
+            $this->toTime = $to;
         }
-
 
         return $this;
     }

@@ -42,24 +42,24 @@ class Appointment
     #[ORM\JoinColumn(name: 'place_id', referencedColumnName: 'id')]
     #[Assert\NotBlank(groups: ['ap_create'])]
     #[Groups(['ap_create', 'ap_list', 'ap_detail'])]
-    private Place $place;
+    private ?Place $place = null;
 
     #[ORM\ManyToOne(targetEntity: Professional::class)]
     #[ORM\JoinColumn(name: 'professional_id', referencedColumnName: 'id')]
     #[Assert\NotBlank(groups: ['ap_create'])]
     #[Groups(['ap_create', 'ap_detail'])]
-    private Professional $professional;
+    private ?Professional $professional = null;
 
     #[ORM\ManyToOne(targetEntity: Patient::class)]
     #[ORM\JoinColumn(name: 'patient_id', referencedColumnName: 'id')]
     #[Assert\NotBlank(groups: ['ap_create'])]
     #[Groups(['ap_create', 'ap_detail'])]
-    private Patient $patient;
+    private ?Patient $patient = null;
 
     #[ORM\ManyToOne(targetEntity: Speciality::class)]
     #[ORM\JoinColumn(name: 'speciality_id', referencedColumnName: 'id')]
     #[Groups(['ap_create', 'ap_detail'])]
-    private Speciality $speciality;
+    private ?Speciality $speciality = null;
 
     public function __construct()
     {
@@ -100,7 +100,7 @@ class Appointment
         return $this;
     }
 
-    public function getPlace(): Place
+    public function getPlace(): ?Place
     {
         return $this->place;
     }
@@ -112,7 +112,7 @@ class Appointment
         return $this;
     }
 
-    public function getProfessional(): Professional
+    public function getProfessional(): ?Professional
     {
         return $this->professional;
     }
@@ -124,7 +124,7 @@ class Appointment
         return $this;
     }
 
-    public function getPatient(): Patient
+    public function getPatient(): ?Patient
     {
         return $this->patient;
     }
@@ -136,7 +136,7 @@ class Appointment
         return $this;
     }
 
-    public function getSpeciality(): Speciality
+    public function getSpeciality(): ?Speciality
     {
         return $this->speciality;
     }

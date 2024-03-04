@@ -27,7 +27,7 @@ class ProfessionalSpeciality
     #[ORM\ManyToOne(targetEntity: Professional::class, inversedBy: 'specialities')]
     protected ?Professional $professional = null;
 
-    #[ORM\ManyToOne(targetEntity: Speciality::class)]
+    #[ORM\ManyToOne(targetEntity: Speciality::class, inversedBy: 'professionals')]
     protected ?Speciality $speciality = null;
 
     #[ORM\Column]
