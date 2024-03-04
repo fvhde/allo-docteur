@@ -13,6 +13,7 @@
     "easycorp/easyadmin-bundle": "^4.9",
     "friendsofsymfony/rest-bundle": "^3.5",
     "gedmo/doctrine-extensions": "^3.11",
+    "knplabs/knp-paginator-bundle": "^6.3",
     "lexik/jwt-authentication-bundle": "^2.16",
     "nelmio/api-doc-bundle": "^4.10",
     "nyholm/psr7": "^1.5",

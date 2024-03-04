@@ -66,6 +66,11 @@ class Appointment
         $this->status = StatusEnum::CREATED->value;
     }
 
+    public function __toString(): string
+    {
+        return (string) $this->id;
+    }
+
     public function getId(): ?string
     {
         return $this->id;

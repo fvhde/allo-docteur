@@ -21,7 +21,7 @@
 							<i class="icon_star voted"></i>
 							<i class="icon_star"></i>
 							<small>(145)</small>
-							<a href="badges.html" data-bs-toggle="tooltip" data-bs-placement="top" title="Badge Level" class="badge_list_1"><img src="img/badges/badge_1.svg" width="15" height="15" alt=""></a>
+							<a href="badges.html" data-bs-toggle="tooltip" data-bs-placement="top" title="Badge Level" class="badge_list_1"><img src="{{ asset('img/badges/badge_1.svg') }}" width="15" height="15" alt=""></a>
 						</span>
                     <ul class="statistic">
                         <li>854 Views</li>
@@ -420,14 +420,20 @@
 
     <!-- SPECIFIC SCRIPTS -->
     {% block script %}
+        <script src="https://code.jquery.com/jquery-3.7.1.slim.js" integrity="sha256-UgvvN8vBkgO0luPSUl2s8TIlOSYRoGFAX4jlCIm9Adc=" crossorigin="anonymous"></script>
         <script src="{{asset('assets/js/bootstrap-datepicker.js')}}"></script>
         <script>
             $('#calendar').datepicker({
+                maxViewMode: 0,
                 todayHighlight: true,
+                language: "fr",
                 daysOfWeekDisabled: [0],
                 weekStart: 1,
-                format: "yyyy-mm-dd",
-                datesDisabled: ["2017/10/20", "2017/11/21","2017/12/21", "2018/01/21","2018/02/21","2018/03/21"],
+                format: "dd-mm-yyyy",
+            }).on('changeDate', function (e) {
+                console.log(e.date);
+                // Update the value of the hidden input when the date changes
+                $('#my_hidden_input').val(e.date);
             });
         </script>
     {% endblock %}

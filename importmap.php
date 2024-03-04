@@ -29,4 +29,7 @@ return [
     '@symfony/stimulus-bundle' => [
         'path' => './vendor/symfony/stimulus-bundle/assets/dist/loader.js',
     ],
+    'air-datepicker' => [
+        'version' => '3.4.0',
+    ],
 ];

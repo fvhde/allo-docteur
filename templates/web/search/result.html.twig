@@ -5,7 +5,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6">
-                <h4><strong>Showing 10</strong> of 140 results</h4>
+                <h4><strong>Showing {{ pagination.paginationData.currentItemCount }}</strong> of {{ pagination.getTotalItemCount }} results</h4>
             </div>
             <div class="col-md-6">
                 <div class="search_bar_list">
@@ -60,7 +60,7 @@
 <div class="container margin_60_35">
     <div class="row">
         <div class="col-lg-7">
-            {% for professional in professionals %}
+            {% for professional in pagination %}
                 <div class="strip_list wow fadeIn">
                     <a href="#0" class="wish_bt"></a>
                     <figure>
@@ -72,9 +72,9 @@
                         {% endfor %}
                     </div>
                     <h3>Dr. {{ professional.firstname }} {{ professional.lastname }}</h3>
-                    <p>Id placerat tacimates definitionem sea, prima quidam vim no. Duo nobis persecuti cuodo....</p>
+                    <p>{{ professional.description }}</p>
                     <span class="rating"><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star"></i><i class="icon_star"></i> <small>(145)</small></span>
-                    <a href="badges.html" data-bs-toggle="tooltip" data-bs-placement="top" title="Badge Level" class="badge_list_1"><img src="img/badges/badge_1.svg" width="15" height="15" alt=""></a>
+                    <a href="badges.html" data-bs-toggle="tooltip" data-bs-placement="top" title="Badge Level" class="badge_list_1"><img src="{{ asset('img/badges/badge_1.svg') }}" width="15" height="15" alt=""></a>
                     <ul>
                         <li>{{ professional.place.name }}</li>
                         <li><a href="#0" onclick="onHtmlClick('Doctors', 0)" class="btn_listing">View on Map</a></li>
@@ -84,20 +84,29 @@
                 </div>
             <!-- /strip_list -->
             {% endfor %}
-
+            {% if pagination.pageCount > 1 %}
             <nav aria-label="" class="add_top_20">
                 <ul class="pagination pagination-sm">
-                    <li class="page-item disabled">
-                        <a class="page-link" href="#" tabindex="-1">Previous</a>
-                    </li>
-                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    {% if pagination.paginationData.previous is defined %}
                     <li class="page-item">
-                        <a class="page-link" href="#">Next</a>
+                        <a class="page-link" href="{{ path(pagination.route, pagination.query|merge({(pagination.paginatorOptions.pageParameterName): pagination.paginationData.previous})) }}" tabindex="-1">Previous</a>
                     </li>
+                    {% endif %}
+                    {% for page in pagination.paginationData.pagesInRange %}
+                        {% if page != pagination.paginationData.current %}
+                            <li class="page-item"><a class="page-link" href="{{ path(pagination.route, pagination.query|merge({(pagination.paginatorOptions.pageParameterName): page})) }}">{{ page }}</a></li>
+                        {% else %}
+                            <li class="page-item active"><a class="page-link" href="{{ path(pagination.route, pagination.query|merge({(pagination.paginatorOptions.pageParameterName): page})) }}">{{ page }}</a></li>
+                        {% endif %}
+                    {% endfor %}
+                    {% if pagination.paginationData.next is defined %}
+                    <li class="page-item">
+                        <a class="page-link" href="{{ path(pagination.route, pagination.query|merge({(pagination.paginatorOptions.pageParameterName): pagination.paginationData.next})) }}">Next</a>
+                    </li>
+                    {% endif %}
                 </ul>
             </nav>
+            {% endif %}
             <!-- /pagination -->
         </div>
         <!-- /col -->

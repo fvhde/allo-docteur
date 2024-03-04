@@ -6,5 +6,7 @@ import './bootstrap.js';
  * which should already be in your base.html.twig.
  */
 import './styles/app.css';
+import AirDatepicker from 'air-datepicker';
+import 'air-datepicker/air-datepicker.css';
 
 console.log('This log comes from assets/app.js - welcome to AssetMapper! 🎉');

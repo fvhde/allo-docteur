@@ -353,6 +353,8 @@
       <path value="$PROJECT_DIR$/vendor/spatie/opening-hours" />
       <path value="$PROJECT_DIR$/vendor/symfony/ux-autocomplete" />
       <path value="$PROJECT_DIR$/vendor/symfony/stimulus-bundle" />
+      <path value="$PROJECT_DIR$/vendor/knplabs/knp-paginator-bundle" />
+      <path value="$PROJECT_DIR$/vendor/knplabs/knp-components" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.1" />
