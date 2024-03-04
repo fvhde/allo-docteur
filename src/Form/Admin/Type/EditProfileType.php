@@ -5,16 +5,19 @@ declare(strict_types=1);
 namespace App\Form\Admin\Type;
 
 use App\Entity\Professional;
+use App\Entity\ValueObject\OpeningHour;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\File;
 
 final class EditProfileType extends AbstractType
 {
@@ -39,14 +42,33 @@ final class EditProfileType extends AbstractType
                 'widget' => 'single_text',
                 'format' => 'yyyy-MM-dd',
             ])
-            ->add('save', SubmitType::class, [
-                'attr' => ['class' => 'save'],
+            ->add('avatar', FileType::class, [
+                'mapped' => false,
+                'constraints' => [
+                    new File([
+                        'maxSize' => '3000k',
+                        'mimeTypes' => [
+                            'image/*',
+                        ],
+                        'mimeTypesMessage' => 'Veuillez télécharger une image valide',
+                    ])
+                ],
             ])
+            ->add('hours', CollectionType::class, [
+                'entry_type' => DayHoursType::class,
+            ])
+            ->add('save', SubmitType::class, [
+                'attr' => ['class' => 'action-save btn-primary'],
+            ])
+            ->addEventListener(FormEvents::PRE_SET_DATA, function ($event) {
+                if (7 != $event->getData()->getHours()->count()) {
+                    $event->getData()->getHours()->clear();
+                    foreach (OpeningHour::DAYS as $day) {
+                        $event->getData()->addHour((new OpeningHour())->setDay($day));
+                    }
+                }
+            })
         ;
-
-        foreach (DayHoursType::DAYS as $day) {
-            $builder->add($day, DayHoursType::class, ['mapped' => false]);
-        }
     }
     public function configureOptions(OptionsResolver $resolver): void
     {

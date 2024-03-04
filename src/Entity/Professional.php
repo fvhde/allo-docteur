@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use App\Entity\Professional\ProfessionalSpeciality;
-use App\Entity\ValueObject\Image;
+use App\Entity\ValueObject\OpeningHour;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -17,17 +17,17 @@ class Professional extends User
     #[ORM\Column(type: 'text')]
     private ?string $description = null;
 
-    #[ORM\Embedded(class: Image::class, columnPrefix: 'avatar_')]
-    private ?Image $avatar = null;
+    #[ORM\Column(nullable: true)]
+    private ?string $avatar = null;
 
     #[ORM\ManyToOne(targetEntity: Place::class, inversedBy: 'professionals')]
     #[ORM\JoinColumn(name: 'place_id', referencedColumnName: 'id')]
     #[Groups(['pro_create', 'pro_detail'])]
     private ?Place $place = null;
 
-    #[ORM\Column(type: 'simple_array')]
+    #[ORM\OneToMany(mappedBy: 'professional', targetEntity: OpeningHour::class, cascade: ['persist', 'remove'])]
     #[Groups(['pro_detail'])]
-    private ?array $hours = null;
+    private Collection $hours;
 
     #[ORM\OneToMany(mappedBy: 'professional', targetEntity: ProfessionalSpeciality::class)]
     #[Groups(['pro_detail'])]
@@ -36,6 +36,10 @@ class Professional extends User
     public function __construct()
     {
         $this->specialities = new ArrayCollection();
+        $this->hours = new ArrayCollection();
+        foreach (OpeningHour::DAYS as $day) {
+            $this->hours->add((new OpeningHour())->setDay($day));
+        }
         parent::__construct();
     }
 
@@ -63,15 +67,25 @@ class Professional extends User
         return $this;
     }
 
-    public function getHours(): ?array
+    public function getHours(): Collection
     {
         return $this->hours;
     }
 
-    public function setHours(array $hours): Professional
+
+    public function addHour(OpeningHour $hour): Professional
+    {
+        if (!$this->hours->contains($hour)) {
+            $this->hours->add($hour);
+            $hour->setProfessional($this);
+        }
+
+        return $this;
+    }
+
+    public function setHours(Collection $hours): Professional
     {
         $this->hours = $hours;
-
         return $this;
     }
 
@@ -107,12 +121,19 @@ class Professional extends User
         return $this;
     }
 
-    public function getAvatar(): ?Image
+    public function getAvatar(): ?string
     {
-        return $this->avatar;
+        if (!$this->avatar) {
+            return null;
+        }
+        if (strpos($this->avatar, '/') !== false) {
+            return $this->avatar;
+        }
+
+        return sprintf('images/avatar/%s', $this->avatar);
     }
 
-    public function setAvatar(?Image $avatar): Professional
+    public function setAvatar(?string $avatar): Professional
     {
         $this->avatar = $avatar;
 

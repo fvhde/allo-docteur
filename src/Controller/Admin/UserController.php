@@ -5,16 +5,17 @@ declare(strict_types=1);
 namespace App\Controller\Admin;
 
 use App\Entity\Professional;
-use App\Form\Admin\Type\DayHoursType;
 use App\Form\Admin\Type\EditProfileType;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 final class UserController extends DashboardController
 {
-    public function __construct(private EntityManagerInterface $em)
+    public function __construct(private EntityManagerInterface $em, #[Autowire('%kernel.project_dir%/public/images/avatar')] private string $dir)
     {}
 
     #[Route('/admin/edit/{uuid}', 'app_admin_edit_profile')]
@@ -28,9 +29,13 @@ final class UserController extends DashboardController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->processHours($request->request->all(), $user);
+            $uploadedFile = $form->get('avatar')->getData();
+            if ($uploadedFile) {
+                $newFileName = $this->upload($uuid, $uploadedFile);
+                $user->setAvatar($newFileName);
+            }
             $this->em->flush();
-            $this->addFlash('success', 'profile maj');
+            $this->addFlash('success', 'Profil mis à jour');
         }
 
         return $this->render(
@@ -39,14 +44,11 @@ final class UserController extends DashboardController
         );
     }
 
-    private function processHours($data, Professional $user): void
+    private function upload(string $id, UploadedFile $file): string
     {
+        $newFileName = $id. '.' . $file->guessExtension();
+        $file->move($this->dir, $newFileName);
 
-        $hours = [];
-        foreach (DayHoursType::DAYS as $day) {
-            $hours[$day] = [$data['edit_profile'][$day]['from'].'-'.$data['edit_profile'][$day]['to']];
-        }
-
-        $user->setHours($hours);
+        return $newFileName;
     }
 }

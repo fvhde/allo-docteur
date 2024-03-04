@@ -10,7 +10,7 @@
             <aside class="col-xl-3 col-lg-4" id="sidebar">
                 <div class="box_profile">
                     <figure>
-                        <img src="http://via.placeholder.com/565x565.jpg" alt="" class="img-fluid">
+                        <img src=" {{ professional.avatar ? asset(professional.avatar) : 'http://via.placeholder.com/565x565.jpg' }}" alt="" class="img-fluid">
                     </figure>
                     <small>Primary care - Internist</small>
                     <h1>DR. Julia Jhones</h1>
@@ -423,7 +423,10 @@
         <script src="https://code.jquery.com/jquery-3.7.1.slim.js" integrity="sha256-UgvvN8vBkgO0luPSUl2s8TIlOSYRoGFAX4jlCIm9Adc=" crossorigin="anonymous"></script>
         <script src="{{asset('assets/js/bootstrap-datepicker.js')}}"></script>
         <script>
+            let startDate = new Date();
+            startDate.setDate(startDate.getDate()-1);
             $('#calendar').datepicker({
+                startDate: startDate,
                 maxViewMode: 0,
                 todayHighlight: true,
                 language: "fr",

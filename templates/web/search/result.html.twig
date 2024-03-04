@@ -64,7 +64,7 @@
                 <div class="strip_list wow fadeIn">
                     <a href="#0" class="wish_bt"></a>
                     <figure>
-                        <a href="detail-page.html"><img src="http://via.placeholder.com/565x565.jpg" alt=""></a>
+                        <a href="detail-page.html"><img src="{{ professional.avatar ? asset(professional.avatar) : 'http://via.placeholder.com/565x565.jpg' }}" alt=""></a>
                     </figure>
                     <div class="row">
                         {% for speciality in professional.specialities %}
