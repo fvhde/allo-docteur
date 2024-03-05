@@ -6,9 +6,9 @@ namespace App\Controller\Admin\Professional;
 
 use App\Entity\Professional\ProfessionalSpeciality;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
-use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
 
 class ProfessionalSpecialityCrudController extends AbstractCrudController
 {
@@ -21,7 +21,9 @@ class ProfessionalSpecialityCrudController extends AbstractCrudController
     {
         return [
             IdField::new('id')->hideOnIndex()->hideOnForm(),
-            TextField::new('name')
+            AssociationField::new('professional'),
+            AssociationField::new('speciality'),
+            NumberField::new('duration')
         ];
     }
 }

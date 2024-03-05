@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Appointment;
+use App\Entity\Place;
 use App\Entity\Professional;
 use App\Entity\Speciality;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Assets;
@@ -53,6 +54,7 @@ class DashboardController extends AbstractDashboardController
                 MenuItem::linkToCrud('Appointment', 'fa fa-list', Appointment::class),
                 MenuItem::linkToCrud('Professional', 'fa fa-list', Professional::class)->setPermission('ROLE_ADMIN'),
                 MenuItem::linkToCrud('Specialities', 'fa fa-stethoscope', Speciality::class)->setPermission('ROLE_ADMIN'),
+                MenuItem::linkToCrud('Places', 'fa fa-stethoscope', Place::class)->setPermission('ROLE_ADMIN'),
                 MenuItem::linkToRoute('Profile', 'fa fa-id-card', 'app_admin_edit_profile', ['uuid' => $user->getId()])
             ]);
     }

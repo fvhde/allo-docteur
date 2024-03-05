@@ -12,7 +12,9 @@
                     <figure>
                         <img src=" {{ professional.avatar ? asset(professional.avatar) : 'http://via.placeholder.com/565x565.jpg' }}" alt="" class="img-fluid">
                     </figure>
-                    <small>Primary care - Internist</small>
+                    {% for speciality in professional.specialities %}
+                        <small>{{ speciality.speciality.name }}</small>
+                    {% endfor %}
                     <h1>{{ professional.firstname }} {{ professional.lastname }}</h1>
                     <span class="rating">
 							<i class="icon_star voted"></i>
@@ -28,8 +30,8 @@
                         <li>124 Patients</li>
                     </ul>
                     <ul class="contacts">
-                        <li><h6>Address</h6>859 60th, Brooklyn, NY, 11220</li>
-                        <li><h6>Phone</h6><a href="tel://000434323342">+00043 4323342</a></li>
+                        <li><h6>Address</h6>{{ professional.place.name }}, {{ professional.place.city.name }}</li>
+                        <li><h6>Phone</h6><a href="">{{ professional.phone }}</a></li>
                     </ul>
                     <div class="text-center"><a href="https://www.google.com/maps/dir//Assistance+%E2%80%93+H%C3%B4pitaux+De+Paris,+3+Avenue+Victoria,+75004+Paris,+Francia/@48.8606548,2.3348734,14z/data=!4m15!1m6!3m5!1s0x0:0xa6a9af76b1e2d899!2sAssistance+%E2%80%93+H%C3%B4pitaux+De+Paris!8m2!3d48.8568376!4d2.3504305!4m7!1m0!1m5!1m1!1s0x47e67031f8c20147:0xa6a9af76b1e2d899!2m2!1d2.3504327!2d48.8568361" class="btn_1 outline" target="_blank"><i class="icon_pin"></i> View on map</a></div>
                 </div>
@@ -38,7 +40,7 @@
             <div class="col-xl-9 col-lg-8">
                 <div class="box_general_2 add_bottom_45">
                     <div class="main_title_4">
-                        <h3><i class="icon_circle-slelected"></i>Select your date and time</h3>
+                        <h3><i class="icon_circle-slelected"></i>Choisissez le jour et l'heure</h3>
                     </div>
 
                     <div class="row add_bottom_45">
@@ -114,53 +116,11 @@
                         {% for speciality in professional.specialities %}
                         <li>
                             <div class="checkbox">
-                                <input type="checkbox" class="css-checkbox" id="speciality" name="visit1">
-                                <label for="visit1" class="css-label">{{ speciality.name }}</label>
+                                <input type="checkbox" class="css-checkbox" id="{{ 'visit'~loop.index }}" name="{{ 'visit' }}" value="{{ speciality.speciality.id }}">
+                                    <label for="{{ 'visit'~loop.index }}" class="css-label">{{ speciality.speciality.name }} <strong>$55</strong></label>
                             </div>
                         </li>
                         {% endfor %}
-                        <li>
-                            <div class="checkbox">
-                                <input type="checkbox" class="css-checkbox" id="visit2" name="visit2">
-                                <label for="visit2" class="css-label">Cardiovascular screen <strong>$55</strong></label>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="checkbox">
-                                <input type="checkbox" class="css-checkbox" id="visit3" name="visit3">
-                                <label for="visit3" class="css-label">Diabetes consultation <strong>$55</strong></label>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="checkbox">
-                                <input type="checkbox" class="css-checkbox" id="visit4" name="visit4">
-                                <label for="visit4" class="css-label">Icontinence visit <strong>$55</strong></label>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="checkbox">
-                                <input type="checkbox" class="css-checkbox" id="visit5" name="visit5">
-                                <label for="visit5" class="css-label">Foot Pain visit <strong>$55</strong></label>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="checkbox">
-                                <input type="checkbox" class="css-checkbox" id="visit6" name="visit6">
-                                <label for="visit6" class="css-label">Food intollerance visit <strong>$55</strong></label>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="checkbox">
-                                <input type="checkbox" class="css-checkbox" id="visit7" name="visit7">
-                                <label for="visit7" class="css-label">Neck Pain visit <strong>$55</strong></label>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="checkbox">
-                                <input type="checkbox" class="css-checkbox" id="visit8" name="visit8">
-                                <label for="visit8" class="css-label">Back Pain visit <strong>$55</strong></label>
-                            </div>
-                        </li>
                     </ul>
                     <hr>
                     {{ form_start(form) }}
@@ -168,7 +128,7 @@
                         <input type="hidden" name="{{ field_name(form.speciality) }}">
                         <input type="hidden" name="{{ field_name(form.beginAt) }}">
 
-                        <div class="text-center"><a type="submit" href="{{ path('app_create_appointment') }}" class="btn_1 medium">Book Now</a></div>
+                        <div class="text-center"><button id="submit" type="submit" class="btn_1 medium">Book Now</button></div>
                     {{ form_end(form) }}
                 </div>
 
@@ -443,6 +403,24 @@
             }).on('changeDate', function (e) {
                 console.log(e.date);
             });
+        </script>
+        <script>
+            const maxChecks = 1
+            let selectedCount = 0
+
+            document.querySelector('.checkbox').addEventListener('click', event => {
+                if (event.target.type === 'checkbox') {
+                    selectedCount = event.target.checked
+                        ? selectedCount + 1
+                        : selectedCount - 1
+                }
+
+                if (selectedCount >= maxChecks) {
+                    [...document.querySelectorAll('input:not(:checked)')].forEach(input => input.disabled = true)
+                } else {
+                    [...document.querySelectorAll('input')].forEach(input => input.disabled = false)
+                }
+            })
         </script>
     {% endblock %}
 {% endblock %}

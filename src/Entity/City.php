@@ -24,6 +24,11 @@ class City
     #[Groups(['city_list'])]
     private string $name;
 
+    public function __toString(): string
+    {
+        return $this->name;
+    }
+
     /**
      * @return mixed
      */

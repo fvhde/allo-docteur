@@ -29,7 +29,7 @@ class Speciality
     #[ORM\Column(name: 'required_documents', type: 'json')]
     private array $requiredDocuments = [];
 
-    #[ORM\OneToMany(mappedBy: 'speciality', targetEntity: ProfessionalSpeciality::class)]
+    #[ORM\OneToMany(mappedBy: 'speciality', targetEntity: ProfessionalSpeciality::class, cascade: ['persist', 'remove'])]
     private Collection $professionals;
 
     public function __construct()

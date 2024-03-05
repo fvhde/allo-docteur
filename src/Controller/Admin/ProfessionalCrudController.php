@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Controller\Admin\Professional\ProfessionalSpecialityCrudController;
 use App\Entity\Professional;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
@@ -26,11 +27,10 @@ class ProfessionalCrudController extends AbstractCrudController
             TextField::new('firstName')->setColumns(5),
             TextField::new('lastName')->setColumns(5),
             AssociationField::new('place')->setColumns(5),
-            AssociationField::new('specialities')
+            CollectionField::new('specialities')
+                ->useEntryCrudForm(ProfessionalSpecialityCrudController::class)
                 ->setColumns(5)
-                ->setFormTypeOptions([
-                    'multiple' => true,
-                ])
+                ->setEntryIsComplex()
                 ->onlyOnForms()
         ];
     }

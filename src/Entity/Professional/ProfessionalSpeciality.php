@@ -33,6 +33,8 @@ class ProfessionalSpeciality
     #[ORM\Column]
     protected ?int $duration = null;
 
+    protected ?float $cost = null;
+
     public function __toString(): string
     {
         return $this->speciality?->getName() ?? '';

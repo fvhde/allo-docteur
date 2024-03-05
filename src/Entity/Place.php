@@ -40,7 +40,7 @@ class Place
     private Collection $professionals;
 
     #[ORM\ManyToOne(targetEntity: City::class, cascade: ['persist', 'remove'])]
-    private City $city;
+    private ?City $city = null;
 
     public function __construct()
     {
@@ -113,7 +113,7 @@ class Place
         return $this;
     }
 
-    public function getCity(): City
+    public function getCity(): ?City
     {
         return $this->city;
     }

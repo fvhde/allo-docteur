@@ -29,7 +29,7 @@ class Professional extends User
     #[Groups(['pro_detail'])]
     private Collection $hours;
 
-    #[ORM\OneToMany(mappedBy: 'professional', targetEntity: ProfessionalSpeciality::class)]
+    #[ORM\OneToMany(mappedBy: 'professional', targetEntity: ProfessionalSpeciality::class, cascade: ['persist', 'remove'])]
     #[Groups(['pro_detail'])]
     private Collection $specialities;
 
