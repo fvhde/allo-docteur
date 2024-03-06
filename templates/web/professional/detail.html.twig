@@ -16,17 +16,7 @@
                         <small>{{ speciality.speciality.name }}</small>
                     {% endfor %}
                     <h1>{{ professional.firstname }} {{ professional.lastname }}</h1>
-                    <span class="rating">
-							<i class="icon_star voted"></i>
-							<i class="icon_star voted"></i>
-							<i class="icon_star voted"></i>
-							<i class="icon_star voted"></i>
-							<i class="icon_star"></i>
-							<small>(145)</small>
-							<a href="badges.html" data-bs-toggle="tooltip" data-bs-placement="top" title="Badge Level" class="badge_list_1"><img src="{{ asset('img/badges/badge_1.svg') }}" width="15" height="15" alt=""></a>
-						</span>
                     <ul class="statistic">
-                        <li>854 Views</li>
                         <li>124 Patients</li>
                     </ul>
                     <ul class="contacts">
@@ -57,51 +47,51 @@
                         <div class="col-lg-5">
                             <ul class="time_select version_2 add_top_20">
                                 <li>
-                                    <input type="radio" id="radio1" name="radio_time" value="09.30am">
+                                    <input type="radio" class="css-radio" id="radio1" name="radio_time" value="09.30am">
                                     <label for="radio1">09.30am</label>
                                 </li>
                                 <li>
-                                    <input type="radio" id="radio2" name="radio_time" value="10.00am">
+                                    <input type="radio" class="css-radio" id="radio2" name="radio_time" value="10.00am">
                                     <label for="radio2">10.00am</label>
                                 </li>
                                 <li>
-                                    <input type="radio" id="radio3" name="radio_time" value="10.30am">
+                                    <input type="radio" class="css-radio" id="radio3" name="radio_time" value="10.30am">
                                     <label for="radio3">10.30am</label>
                                 </li>
                                 <li>
-                                    <input type="radio" id="radio4" name="radio_time" value="11.00am">
+                                    <input type="radio" class="css-radio" id="radio4" name="radio_time" value="11.00am">
                                     <label for="radio4">11.00am</label>
                                 </li>
                                 <li>
-                                    <input type="radio" id="radio5" name="radio_time" value="11.30am">
+                                    <input type="radio" class="css-radio" id="radio5" name="radio_time" value="11.30am">
                                     <label for="radio5">11.30am</label>
                                 </li>
                                 <li>
-                                    <input type="radio" id="radio6" name="radio_time" value="12.00am">
+                                    <input type="radio" class="css-radio" id="radio6" name="radio_time" value="12.00am">
                                     <label for="radio6">12.00am</label>
                                 </li>
                                 <li>
-                                    <input type="radio" id="radio7" name="radio_time" value="01.30pm">
+                                    <input type="radio" class="css-radio" id="radio7" name="radio_time" value="01.30pm">
                                     <label for="radio7">01.30pm</label>
                                 </li>
                                 <li>
-                                    <input type="radio" id="radio8" name="radio_time" value="02.00pm">
+                                    <input type="radio" class="css-radio" id="radio8" name="radio_time" value="02.00pm">
                                     <label for="radio8">02.00pm</label>
                                 </li>
                                 <li>
-                                    <input type="radio" id="radio9" name="radio_time" value="02.30pm">
+                                    <input type="radio" class="css-radio" id="radio9" name="radio_time" value="02.30pm">
                                     <label for="radio9">02.30pm</label>
                                 </li>
                                 <li>
-                                    <input type="radio" id="radio10" name="radio_time" value="03.00pm">
+                                    <input type="radio" class="css-radio" id="radio10" name="radio_time" value="03.00pm">
                                     <label for="radio10">03.00pm</label>
                                 </li>
                                 <li>
-                                    <input type="radio" id="radio11" name="radio_time" value="03.30pm">
+                                    <input type="radio" class="css-radio" id="radio11" name="radio_time" value="03.30pm">
                                     <label for="radio11">03.30pm</label>
                                 </li>
                                 <li>
-                                    <input type="radio" id="radio12" name="radio_time" value="04.00pm">
+                                    <input type="radio" class="css-radio" id="radio12" name="radio_time" value="04.00pm">
                                     <label for="radio12">04.00pm</label>
                                 </li>
                             </ul>
@@ -125,8 +115,7 @@
                     <hr>
                     {{ form_start(form) }}
                         <input type="hidden" name="{{ field_name(form.professional) }}" value="{{ professional.id }}">
-                        <input type="hidden" name="{{ field_name(form.speciality) }}">
-                        <input type="hidden" name="{{ field_name(form.beginAt) }}">
+                        <input type="hidden" id="{{ field_name(form.speciality) }}" name="{{ field_name(form.speciality) }}">
 
                         <div class="text-center"><button id="submit" type="submit" class="btn_1 medium">Book Now</button></div>
                     {{ form_end(form) }}
@@ -401,26 +390,8 @@
                 weekStart: 1,
                 format: "dd-mm-yyyy",
             }).on('changeDate', function (e) {
-                console.log(e.date);
+                console.log(e.date.toLocaleDateString('fr'));
             });
-        </script>
-        <script>
-            const maxChecks = 1
-            let selectedCount = 0
-
-            document.querySelector('.checkbox').addEventListener('click', event => {
-                if (event.target.type === 'checkbox') {
-                    selectedCount = event.target.checked
-                        ? selectedCount + 1
-                        : selectedCount - 1
-                }
-
-                if (selectedCount >= maxChecks) {
-                    [...document.querySelectorAll('input:not(:checked)')].forEach(input => input.disabled = true)
-                } else {
-                    [...document.querySelectorAll('input')].forEach(input => input.disabled = false)
-                }
-            })
         </script>
     {% endblock %}
 {% endblock %}

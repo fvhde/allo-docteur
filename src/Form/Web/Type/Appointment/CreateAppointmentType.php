@@ -18,7 +18,7 @@ final class CreateAppointmentType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('beginAt', DateTimeType::class)
+           // ->add('beginAt', DateTimeType::class, ['required' => false])
             ->add('professional', EntityType::class, ['class' => Professional::class])
             ->add('speciality', EntityType::class, ['class' => Speciality::class])
         ;

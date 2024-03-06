@@ -1,5 +1,8 @@
 {% extends 'web/layout.html.twig' %}
 
+{% block style %}
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+{% endblock %}
 {% block main %}
 <div id="results">
     <div class="container">
@@ -54,7 +57,7 @@
                             <small class="col-md-1">{{ speciality.speciality.name }}</small>
                         {% endfor %}
                     </div>
-                    <h3>Dr. {{ professional.firstname }} {{ professional.lastname }}</h3>
+                    <h3>{{ professional.firstname }} {{ professional.lastname }}</h3>
                     <p>{{ professional.description }}</p>
                     <span class="rating"><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star"></i><i class="icon_star"></i> <small>(145)</small></span>
                     <a href="badges.html" data-bs-toggle="tooltip" data-bs-placement="top" title="Badge Level" class="badge_list_1"><img src="{{ asset('img/badges/badge_1.svg') }}" width="15" height="15" alt=""></a>
@@ -104,4 +107,14 @@
     <!-- /row -->
 </div>
 <!-- /container -->
+{% endblock %}
+{% block script %}
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script>
+        let map = L.map('map_listing').setView([51.505, -0.09], 13);
+        L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        }).addTo(map);
+    </script>
 {% endblock %}

@@ -29,7 +29,11 @@ final class AppointmentController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $appointment->setPatient($user);
+            $appointment
+                ->setBeginAt(new \DateTime())
+                ->setEndAt(new \DateTime())
+                ->setPlace($appointment->getProfessional()->getPlace())
+                ->setPatient($user);
 
             $this->em->persist($appointment);
             $this->em->flush();
@@ -37,8 +41,8 @@ final class AppointmentController extends AbstractController
             return $this->redirectToRoute('app_created_appointment');
         }
 
-        return $this->render('web/professional/detail.html.twig', [
-            'professional' => $appointment->getProfessional(),
+        return $this->redirectToRoute('app_show_professional', [
+            'id' => $appointment->getProfessional()->getId(),
             'form' => $form
         ]);
     }
