@@ -7,12 +7,13 @@ namespace App\Entity\Professional;
 
 use App\Entity\Professional;
 use App\Entity\Speciality;
+use App\Repository\ProfessionalSpecialityRepository;
 use Gedmo\Timestampable\Traits\Timestampable;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Uid\Uuid;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity]
+#[ORM\Entity(repositoryClass: ProfessionalSpecialityRepository::class)]
 class ProfessionalSpeciality
 {
     use Timestampable;

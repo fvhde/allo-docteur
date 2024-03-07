@@ -24,6 +24,7 @@
     <link href="{{ asset('assets/css/menu.css')}}" rel="stylesheet">
     <link href="{{ asset('assets/css/vendors.css')}}" rel="stylesheet">
     <link href="{{ asset('assets/css/icon_fonts/css/all_icons_min.css')}}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastr@2.1.4/build/toastr.min.css">
     {% block style %}{% endblock %}
 
     <!-- YOUR CUSTOM CSS -->
@@ -163,6 +164,20 @@
 <script src="{{ asset('assets/js/jquery-3.7.1.min.js') }}"></script>
 <script src="{{ asset('assets/js/common_scripts.min.js') }}"></script>
 <script src="{{ asset('assets/js/functions.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/toastr@2.1.4/toastr.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        let messages = {{ app.session.getFlashBag.all|json_encode()|raw }};
+        let t = toastr;
+        if (messages.success !== undefined) {
+            t.options.progressBar = true;
+            messages.success.forEach(e => t.success(e));
+        }
+        if (messages.error !== undefined) {
+            messages.error.forEach(e => t.error(e));
+        }
+    });
+</script>
 {% block importmap %}{{ importmap('app') }}{% endblock %}
 
 </body>

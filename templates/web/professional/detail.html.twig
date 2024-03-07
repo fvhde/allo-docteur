@@ -1,5 +1,6 @@
 {% extends 'web/layout.html.twig' %}
 
+{% block page_title %}{{ professional.firstname }} {{ professional.lastname }}{% endblock %}
 {% block style %}
     <link href="{{ asset('assets/css/date_picker.css')}}" rel="stylesheet">
 {% endblock %}
@@ -45,54 +46,9 @@
                             </div>
                         </div>
                         <div class="col-lg-5">
-                            <ul class="time_select version_2 add_top_20">
+                            <ul class="time_select version_2 add_top_20" id="hours">
                                 <li>
-                                    <input type="radio" class="css-radio" id="radio1" name="radio_time" value="09.30am">
-                                    <label for="radio1">09.30am</label>
-                                </li>
-                                <li>
-                                    <input type="radio" class="css-radio" id="radio2" name="radio_time" value="10.00am">
-                                    <label for="radio2">10.00am</label>
-                                </li>
-                                <li>
-                                    <input type="radio" class="css-radio" id="radio3" name="radio_time" value="10.30am">
-                                    <label for="radio3">10.30am</label>
-                                </li>
-                                <li>
-                                    <input type="radio" class="css-radio" id="radio4" name="radio_time" value="11.00am">
-                                    <label for="radio4">11.00am</label>
-                                </li>
-                                <li>
-                                    <input type="radio" class="css-radio" id="radio5" name="radio_time" value="11.30am">
-                                    <label for="radio5">11.30am</label>
-                                </li>
-                                <li>
-                                    <input type="radio" class="css-radio" id="radio6" name="radio_time" value="12.00am">
-                                    <label for="radio6">12.00am</label>
-                                </li>
-                                <li>
-                                    <input type="radio" class="css-radio" id="radio7" name="radio_time" value="01.30pm">
-                                    <label for="radio7">01.30pm</label>
-                                </li>
-                                <li>
-                                    <input type="radio" class="css-radio" id="radio8" name="radio_time" value="02.00pm">
-                                    <label for="radio8">02.00pm</label>
-                                </li>
-                                <li>
-                                    <input type="radio" class="css-radio" id="radio9" name="radio_time" value="02.30pm">
-                                    <label for="radio9">02.30pm</label>
-                                </li>
-                                <li>
-                                    <input type="radio" class="css-radio" id="radio10" name="radio_time" value="03.00pm">
-                                    <label for="radio10">03.00pm</label>
-                                </li>
-                                <li>
-                                    <input type="radio" class="css-radio" id="radio11" name="radio_time" value="03.30pm">
-                                    <label for="radio11">03.30pm</label>
-                                </li>
-                                <li>
-                                    <input type="radio" class="css-radio" id="radio12" name="radio_time" value="04.00pm">
-                                    <label for="radio12">04.00pm</label>
+                                   <p>Choisissez une date pour charger les heures</p>
                                 </li>
                             </ul>
                         </div>
@@ -116,6 +72,8 @@
                     {{ form_start(form) }}
                         <input type="hidden" name="{{ field_name(form.professional) }}" value="{{ professional.id }}">
                         <input type="hidden" id="{{ field_name(form.speciality) }}" name="{{ field_name(form.speciality) }}">
+                        <input type="hidden" id="{{ field_name(form.date) }}" name="{{ field_name(form.date) }}">
+                        <input type="hidden" id="{{ field_name(form.time) }}" name="{{ field_name(form.time) }}">
 
                         <div class="text-center"><button id="submit" type="submit" class="btn_1 medium">Book Now</button></div>
                     {{ form_end(form) }}
@@ -379,6 +337,54 @@
         <script src="https://code.jquery.com/jquery-3.7.1.slim.js" integrity="sha256-UgvvN8vBkgO0luPSUl2s8TIlOSYRoGFAX4jlCIm9Adc=" crossorigin="anonymous"></script>
         <script src="{{asset('assets/js/bootstrap-datepicker.js')}}"></script>
         <script>
+            const updateHours = function (day) {
+                let p = '{{professional.id}}';
+                fetch(`/api/professionals/${p}/availability/${day}`)
+                .then(response => response.json())
+                .then(data => {
+                    let lu = document.getElementById('hours');
+                    lu.innerHTML="";
+
+                    if (data.length === 0) {
+                        let li = document.createElement('li');
+                        let p = document.createElement('p');
+                        p.innerHTML = 'Aucun rdv disponible pour cette date';
+                        li.appendChild(p);
+                        lu.appendChild(li);
+
+                        return;
+                    }
+
+                    let i = 1;
+                    data.forEach(h => {
+                        let li = document.createElement('li');
+                        let input = document.createElement('input');
+                        let label = document.createElement('label');
+
+                        input.setAttribute('id', `radio${i}`)
+                        input.setAttribute('type', 'radio');
+                        input.setAttribute('class', 'css-radio');
+                        input.setAttribute('name', 'radio_time');
+                        input.setAttribute('value', h);
+
+                        label.setAttribute('for', `radio${i}`);
+                        label.innerHTML=h;
+
+                        li.appendChild(input);
+                        li.appendChild(label);
+
+                        li.addEventListener('change', function(e) {
+                            let item = e.target.value;
+                            console.log(item);
+                            document.getElementById('create_appointment[time]').value = item;
+                        })
+
+                        lu.appendChild(li);
+                        i++;
+                    })
+                })
+            };
+
             let startDate = new Date();
             startDate.setDate(startDate.getDate()-1);
             $('#calendar').datepicker({
@@ -390,7 +396,9 @@
                 weekStart: 1,
                 format: "dd-mm-yyyy",
             }).on('changeDate', function (e) {
-                console.log(e.date.toLocaleDateString('fr'));
+                console.log(e.date.toISOString());
+                updateHours(e.date.toISOString());
+                document.getElementById('create_appointment[date]').value = e.date.toISOString();
             });
         </script>
     {% endblock %}

@@ -50,11 +50,11 @@ class Appointment
     #[Groups(['ap_create', 'ap_detail'])]
     private ?Professional $professional = null;
 
-    #[ORM\ManyToOne(targetEntity: Patient::class)]
+    #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(name: 'patient_id', referencedColumnName: 'id')]
     #[Assert\NotBlank(groups: ['ap_create'])]
     #[Groups(['ap_create', 'ap_detail'])]
-    private ?Patient $patient = null;
+    private ?User $patient = null;
 
     #[ORM\ManyToOne(targetEntity: Speciality::class)]
     #[ORM\JoinColumn(name: 'speciality_id', referencedColumnName: 'id')]
@@ -124,12 +124,12 @@ class Appointment
         return $this;
     }
 
-    public function getPatient(): ?Patient
+    public function getPatient(): ?User
     {
         return $this->patient;
     }
 
-    public function setPatient(Patient $patient): Appointment
+    public function setPatient(User $patient): Appointment
     {
         $this->patient = $patient;
 

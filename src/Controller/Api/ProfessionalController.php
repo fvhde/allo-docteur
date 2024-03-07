@@ -5,11 +5,13 @@ declare(strict_types=1);
 namespace App\Controller\Api;
 
 use App\Builder\Api\ResourceCollectionBuilder;
+use App\Entity\Appointment;
 use App\Entity\Place;
 use App\Entity\Professional;
 use Doctrine\ORM\EntityManagerInterface;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
+use FOS\RestBundle\View\View;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use OpenApi\Attributes as OA;
 use Paknahad\Querifier\Exception\InvalidQuery;
@@ -184,5 +186,48 @@ final class ProfessionalController extends AbstractFOSRestController
     {
         $this->em->remove($professional);
         $this->em->flush();
+    }
+
+    #[Route('/{id}/availability/{day}', methods: ['GET'])]
+    public function checkAvailability(string $id, string $day): View
+    {
+        $professional = $this->em->getRepository(Professional::class)->find($id);
+        $day = \DateTimeImmutable::createFromFormat('Y-m-d\TH:i:s.u\Z', $day);
+        $start = strtotime('09:00');
+        $end = strtotime('18:00');
+        $minutesPerSession = 60;
+        $minutesPerGap = 15;
+        $verifyDay = date('Y-m-d'); // set the day to check
+
+        $dayAppointments = $this->em->getRepository(Appointment::class)->findByProfessionalAndDay($professional, $day);
+        $dayAppointments = array_map(function (Appointment $a) {
+            return ['begin_at' => $a->getBeginAt(), 'end_at' => $a->getEndAt()];
+        }, $dayAppointments);
+
+        $slotsAvailable = [];
+        for ($i = $start; $i <= $end; $i = $i + $minutesPerGap * 60) {
+            $time = date('H:i', $i);
+            $range = date('H:i', strtotime("{$minutesPerSession} minutes", $i));
+            $dateStart = $verifyDay . ' ' . $time;
+            $dateEnd = $verifyDay . ' ' . $range;
+            $isAvailable = true;
+
+            foreach ($dayAppointments as $key => $unavailable) {
+                if (
+                    ($unavailable['begin_at'] <= $dateStart && $unavailable['end_at'] >= $dateStart) ||
+                    ($unavailable['begin_at'] <= $dateEnd && $unavailable['end_at'] >= $dateEnd) ||
+                    ($unavailable['begin_at'] >= $dateStart && $unavailable['end_at'] <= $dateEnd)
+                ) {
+                    $isAvailable = false;
+                    break;
+                }
+            }
+
+            if ($isAvailable) {
+                $slotsAvailable[] = $time;
+            }
+        }
+
+        return View::create($slotsAvailable);
     }
 }

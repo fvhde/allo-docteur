@@ -6,6 +6,7 @@ namespace App\Controller\Web;
 
 use App\Entity\Appointment;
 use App\Entity\Patient;
+use App\Entity\Professional\ProfessionalSpeciality;
 use App\Form\Web\Type\Appointment\CreateAppointmentType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -27,11 +28,14 @@ final class AppointmentController extends AbstractController
         $appointment = new Appointment();
         $form = $this->createForm(CreateAppointmentType::class, $appointment);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
+            $data = $request->request->all()['create_appointment'];
+            [$h, $m] = explode(':', $data['time']);
+            $start = (\DateTimeImmutable::createFromFormat('Y-m-d\TH:i:s.u\Z', $data['date']))->setTime((int)$h, (int)$m);
+
             $appointment
-                ->setBeginAt(new \DateTime())
-                ->setEndAt(new \DateTime())
+                ->setBeginAt($start)
+                ->setEndAt($start->modify('+'.$this->em->getRepository(ProfessionalSpeciality::class)->getDuration($appointment->getProfessional(), $appointment->getSpeciality()) ?? '15'.'min'))
                 ->setPlace($appointment->getProfessional()->getPlace())
                 ->setPatient($user);
 
@@ -39,6 +43,10 @@ final class AppointmentController extends AbstractController
             $this->em->flush();
             // do anything else you need here, like send an email
             return $this->redirectToRoute('app_created_appointment');
+        }
+
+        foreach ($form->getErrors(true) as $error) {
+            $request->getSession()->getFlashBag()->add('error', $error->getMessage());
         }
 
         return $this->redirectToRoute('app_show_professional', [
