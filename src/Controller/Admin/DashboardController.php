@@ -2,45 +2,60 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Appointment;
+use App\Entity\Place;
+use App\Entity\Professional;
+use App\Entity\Speciality;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Assets;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
+use EasyCorp\Bundle\EasyAdminBundle\Config\UserMenu;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class DashboardController extends AbstractDashboardController
 {
     #[Route('/admin', name: 'admin_dashboard')]
     public function index(): Response
     {
-        return parent::index();
+        return $this->render('admin/home.html.twig');
+    }
 
-        // Option 1. You can make your dashboard redirect to some common page of your backend
-        //
-        // $adminUrlGenerator = $this->container->get(AdminUrlGenerator::class);
-        // return $this->redirect($adminUrlGenerator->setController(OneOfYourCrudController::class)->generateUrl());
+    public function configureAssets(): Assets
+    {
+        return Assets::new()
+            ->addCssFile('admin/css/admin.css')
+            ->addJsFile('admin/js/admin.js')
+            ->addJsFile('admin/js/admin-charts.js')
+        ;
+    }
 
-        // Option 2. You can make your dashboard redirect to different pages depending on the user
-        //
-        // if ('jane' === $this->getUser()->getUsername()) {
-        //     return $this->redirect('...');
-        // }
-
-        // Option 3. You can render some custom template to display a proper dashboard with widgets, etc.
-        // (tip: it's easier if your template extends from @EasyAdmin/page/content.html.twig)
-        //
-        // return $this->render('some/path/my-dashboard.html.twig');
+    public function configureCrud(): Crud
+    {
+        return Crud::new();
     }
 
     public function configureDashboard(): Dashboard
     {
-        return Dashboard::new()
-            ->setTitle('Symfony');
+        return Dashboard::new()->setTitle('Tibse Admin');
     }
 
-    public function configureMenuItems(): iterable
+    public function configureUserMenu(UserInterface $user): UserMenu
     {
-        yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
-        // yield MenuItem::linkToCrud('The Label', 'fas fa-list', EntityClass::class);
+
+        return UserMenu::new()
+            ->setName($user->getFirstName())
+            ->displayUserAvatar(false)
+            ->addMenuItems([
+                MenuItem::linkToDashboard('Dashboard', 'fa fa-home'),
+                MenuItem::linkToCrud('Appointment', 'fa fa-list', Appointment::class),
+                MenuItem::linkToCrud('Professional', 'fa fa-list', Professional::class)->setPermission('ROLE_ADMIN'),
+                MenuItem::linkToCrud('Specialities', 'fa fa-stethoscope', Speciality::class)->setPermission('ROLE_ADMIN'),
+                MenuItem::linkToCrud('Places', 'fa fa-stethoscope', Place::class)->setPermission('ROLE_ADMIN'),
+                MenuItem::linkToRoute('Profile', 'fa fa-id-card', 'app_admin_edit_profile', ['uuid' => $user->getId()])
+            ]);
     }
 }

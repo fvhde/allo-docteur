@@ -30,5 +30,6 @@
 
 ###> symfony/asset-mapper ###
 /public/assets/
+/public/images/
 /assets/vendor/
 ###< symfony/asset-mapper ###

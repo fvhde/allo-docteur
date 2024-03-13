@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use App\Entity\Professional\ProfessionalSpeciality;
 use App\Entity\Trait\Timestamp\Timestampable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -14,7 +15,6 @@ use Symfony\Component\Serializer\Annotation\Groups;
 class Speciality
 {
     use Timestampable;
-
     #[ORM\Id]
     #[ORM\Column(type: 'uuid')]
     #[ORM\GeneratedValue(strategy: 'CUSTOM')]
@@ -29,7 +29,7 @@ class Speciality
     #[ORM\Column(name: 'required_documents', type: 'json')]
     private array $requiredDocuments = [];
 
-    #[ORM\ManyToMany(targetEntity: Professional::class, mappedBy: 'specialities')]
+    #[ORM\OneToMany(mappedBy: 'speciality', targetEntity: ProfessionalSpeciality::class, cascade: ['persist', 'remove'])]
     private Collection $professionals;
 
     public function __construct()
@@ -37,10 +37,15 @@ class Speciality
         $this->professionals = new ArrayCollection();
     }
 
+    public function __toString(): string
+    {
+        return $this->name;
+    }
+
     /**
      * @return mixed
      */
-    public function getId(): ?string
+    public function getId()
     {
         return $this->id;
     }

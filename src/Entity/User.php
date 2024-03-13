@@ -22,6 +22,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     use Timestampable;
 
+    public function __toString(): string
+    {
+        return $this->firstName.' '.$this->lastName;
+    }
+
     #[ORM\Id]
     #[ORM\Column(type: 'uuid')]
     #[ORM\GeneratedValue(strategy: 'CUSTOM')]
@@ -38,7 +43,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string', length: 100, unique: true, nullable: true)]
     #[Assert\NotBlank(groups: ['user_create'])]
     #[Groups(['user_create', 'user_detail'])]
-    private string $phone;
+    private ?string $phone = null;
 
     #[ORM\Column(type: 'string', length: 150)]
     #[Assert\NotBlank(groups: ['user_create'])]
@@ -96,7 +101,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getPhone(): string
+    public function getPhone(): ?string
     {
         return $this->phone;
     }

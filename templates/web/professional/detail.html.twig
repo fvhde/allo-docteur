@@ -1,48 +1,43 @@
 {% extends 'web/layout.html.twig' %}
 
+{% block page_title %}{{ professional.firstname }} {{ professional.lastname }}{% endblock %}
+{% block style %}
+    <link href="{{ asset('assets/css/date_picker.css')}}" rel="stylesheet">
+{% endblock %}
+
 {% block main %}
     <div class="container margin_60">
         <div class="row">
             <aside class="col-xl-3 col-lg-4" id="sidebar">
                 <div class="box_profile">
                     <figure>
-                        <img src="http://via.placeholder.com/565x565.jpg" alt="" class="img-fluid">
+                        <img src=" {{ professional.avatar ? asset(professional.avatar) : 'http://via.placeholder.com/565x565.jpg' }}" alt="" class="img-fluid">
                     </figure>
-                    <small>Primary care - Internist</small>
-                    <h1>DR. Julia Jhones</h1>
-                    <span class="rating">
-							<i class="icon_star voted"></i>
-							<i class="icon_star voted"></i>
-							<i class="icon_star voted"></i>
-							<i class="icon_star voted"></i>
-							<i class="icon_star"></i>
-							<small>(145)</small>
-							<a href="badges.html" data-bs-toggle="tooltip" data-bs-placement="top" title="Badge Level" class="badge_list_1"><img src="img/badges/badge_1.svg" width="15" height="15" alt=""></a>
-						</span>
+                    {% for speciality in professional.specialities %}
+                        <small>{{ speciality.speciality.name }}</small>
+                    {% endfor %}
+                    <h1>{{ professional.firstname }} {{ professional.lastname }}</h1>
                     <ul class="statistic">
-                        <li>854 Views</li>
                         <li>124 Patients</li>
                     </ul>
                     <ul class="contacts">
-                        <li><h6>Address</h6>859 60th, Brooklyn, NY, 11220</li>
-                        <li><h6>Phone</h6><a href="tel://000434323342">+00043 4323342</a></li>
+                        <li><h6>Address</h6>{{ professional.place.name }}, {{ professional.place.city.name }}</li>
+                        <li><h6>Phone</h6><a href="">{{ professional.phone }}</a></li>
                     </ul>
                     <div class="text-center"><a href="https://www.google.com/maps/dir//Assistance+%E2%80%93+H%C3%B4pitaux+De+Paris,+3+Avenue+Victoria,+75004+Paris,+Francia/@48.8606548,2.3348734,14z/data=!4m15!1m6!3m5!1s0x0:0xa6a9af76b1e2d899!2sAssistance+%E2%80%93+H%C3%B4pitaux+De+Paris!8m2!3d48.8568376!4d2.3504305!4m7!1m0!1m5!1m1!1s0x47e67031f8c20147:0xa6a9af76b1e2d899!2m2!1d2.3504327!2d48.8568361" class="btn_1 outline" target="_blank"><i class="icon_pin"></i> View on map</a></div>
                 </div>
             </aside>
             <!-- /asdide -->
-
             <div class="col-xl-9 col-lg-8">
-
                 <div class="box_general_2 add_bottom_45">
                     <div class="main_title_4">
-                        <h3><i class="icon_circle-slelected"></i>Select your date and time</h3>
+                        <h3><i class="icon_circle-slelected"></i>Choisissez le jour et l'heure</h3>
                     </div>
 
                     <div class="row add_bottom_45">
                         <div class="col-lg-7">
                             <div class="form-group">
-                                <div id="calendar"></div>
+                                <div class="input-group date" id="calendar"></div>
                                 <input type="hidden" id="my_hidden_input">
                                 <ul class="legend">
                                     <li><strong></strong>Available</li>
@@ -51,54 +46,9 @@
                             </div>
                         </div>
                         <div class="col-lg-5">
-                            <ul class="time_select version_2 add_top_20">
+                            <ul class="time_select version_2 add_top_20" id="hours">
                                 <li>
-                                    <input type="radio" id="radio1" name="radio_time" value="09.30am">
-                                    <label for="radio1">09.30am</label>
-                                </li>
-                                <li>
-                                    <input type="radio" id="radio2" name="radio_time" value="10.00am">
-                                    <label for="radio2">10.00am</label>
-                                </li>
-                                <li>
-                                    <input type="radio" id="radio3" name="radio_time" value="10.30am">
-                                    <label for="radio3">10.30am</label>
-                                </li>
-                                <li>
-                                    <input type="radio" id="radio4" name="radio_time" value="11.00am">
-                                    <label for="radio4">11.00am</label>
-                                </li>
-                                <li>
-                                    <input type="radio" id="radio5" name="radio_time" value="11.30am">
-                                    <label for="radio5">11.30am</label>
-                                </li>
-                                <li>
-                                    <input type="radio" id="radio6" name="radio_time" value="12.00am">
-                                    <label for="radio6">12.00am</label>
-                                </li>
-                                <li>
-                                    <input type="radio" id="radio7" name="radio_time" value="01.30pm">
-                                    <label for="radio7">01.30pm</label>
-                                </li>
-                                <li>
-                                    <input type="radio" id="radio8" name="radio_time" value="02.00pm">
-                                    <label for="radio8">02.00pm</label>
-                                </li>
-                                <li>
-                                    <input type="radio" id="radio9" name="radio_time" value="02.30pm">
-                                    <label for="radio9">02.30pm</label>
-                                </li>
-                                <li>
-                                    <input type="radio" id="radio10" name="radio_time" value="03.00pm">
-                                    <label for="radio10">03.00pm</label>
-                                </li>
-                                <li>
-                                    <input type="radio" id="radio11" name="radio_time" value="03.30pm">
-                                    <label for="radio11">03.30pm</label>
-                                </li>
-                                <li>
-                                    <input type="radio" id="radio12" name="radio_time" value="04.00pm">
-                                    <label for="radio12">04.00pm</label>
+                                   <p>Choisissez une date pour charger les heures</p>
                                 </li>
                             </ul>
                         </div>
@@ -109,58 +59,26 @@
                         <h3><i class="icon_circle-slelected"></i>Select visit - treatment</h3>
                     </div>
                     <ul class="treatments clearfix">
+                        {% for speciality in professional.specialities %}
                         <li>
                             <div class="checkbox">
-                                <input type="checkbox" class="css-checkbox" id="visit1" name="visit1">
-                                <label for="visit1" class="css-label">Back Pain visit <strong>$55</strong></label>
+                                <input type="checkbox" class="css-checkbox" id="{{ 'visit'~loop.index }}" name="{{ 'visit' }}" value="{{ speciality.speciality.id }}">
+                                    <label for="{{ 'visit'~loop.index }}" class="css-label">{{ speciality.speciality.name }} <strong>$55</strong></label>
                             </div>
                         </li>
-                        <li>
-                            <div class="checkbox">
-                                <input type="checkbox" class="css-checkbox" id="visit2" name="visit2">
-                                <label for="visit2" class="css-label">Cardiovascular screen <strong>$55</strong></label>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="checkbox">
-                                <input type="checkbox" class="css-checkbox" id="visit3" name="visit3">
-                                <label for="visit3" class="css-label">Diabetes consultation <strong>$55</strong></label>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="checkbox">
-                                <input type="checkbox" class="css-checkbox" id="visit4" name="visit4">
-                                <label for="visit4" class="css-label">Icontinence visit <strong>$55</strong></label>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="checkbox">
-                                <input type="checkbox" class="css-checkbox" id="visit5" name="visit5">
-                                <label for="visit5" class="css-label">Foot Pain visit <strong>$55</strong></label>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="checkbox">
-                                <input type="checkbox" class="css-checkbox" id="visit6" name="visit6">
-                                <label for="visit6" class="css-label">Food intollerance visit <strong>$55</strong></label>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="checkbox">
-                                <input type="checkbox" class="css-checkbox" id="visit7" name="visit7">
-                                <label for="visit7" class="css-label">Neck Pain visit <strong>$55</strong></label>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="checkbox">
-                                <input type="checkbox" class="css-checkbox" id="visit8" name="visit8">
-                                <label for="visit8" class="css-label">Back Pain visit <strong>$55</strong></label>
-                            </div>
-                        </li>
+                        {% endfor %}
                     </ul>
                     <hr>
-                    <div class="text-center"><a href="booking-page.html" class="btn_1 medium">Book Now</a></div>
+                    {{ form_start(form) }}
+                        <input type="hidden" name="{{ field_name(form.professional) }}" value="{{ professional.id }}">
+                        <input type="hidden" id="{{ field_name(form.speciality) }}" name="{{ field_name(form.speciality) }}">
+                        <input type="hidden" id="{{ field_name(form.date) }}" name="{{ field_name(form.date) }}">
+                        <input type="hidden" id="{{ field_name(form.time) }}" name="{{ field_name(form.time) }}">
+
+                        <div class="text-center"><button id="submit" type="submit" class="btn_1 medium">Book Now</button></div>
+                    {{ form_end(form) }}
                 </div>
+
                 <!-- /box_general -->
 
                 <div class="tabs_styled_2">
@@ -416,14 +334,71 @@
 
     <!-- SPECIFIC SCRIPTS -->
     {% block script %}
+        <script src="https://code.jquery.com/jquery-3.7.1.slim.js" integrity="sha256-UgvvN8vBkgO0luPSUl2s8TIlOSYRoGFAX4jlCIm9Adc=" crossorigin="anonymous"></script>
         <script src="{{asset('assets/js/bootstrap-datepicker.js')}}"></script>
         <script>
+            const updateHours = function (day) {
+                let p = '{{professional.id}}';
+                fetch(`/api/professionals/${p}/availability/${day}`)
+                .then(response => response.json())
+                .then(data => {
+                    let lu = document.getElementById('hours');
+                    lu.innerHTML="";
+
+                    if (data.length === 0) {
+                        let li = document.createElement('li');
+                        let p = document.createElement('p');
+                        p.innerHTML = 'Aucun rdv disponible pour cette date';
+                        li.appendChild(p);
+                        lu.appendChild(li);
+
+                        return;
+                    }
+
+                    let i = 1;
+                    data.forEach(h => {
+                        let li = document.createElement('li');
+                        let input = document.createElement('input');
+                        let label = document.createElement('label');
+
+                        input.setAttribute('id', `radio${i}`)
+                        input.setAttribute('type', 'radio');
+                        input.setAttribute('class', 'css-radio');
+                        input.setAttribute('name', 'radio_time');
+                        input.setAttribute('value', h);
+
+                        label.setAttribute('for', `radio${i}`);
+                        label.innerHTML=h;
+
+                        li.appendChild(input);
+                        li.appendChild(label);
+
+                        li.addEventListener('change', function(e) {
+                            let item = e.target.value;
+                            console.log(item);
+                            document.getElementById('create_appointment[time]').value = item;
+                        })
+
+                        lu.appendChild(li);
+                        i++;
+                    })
+                })
+            };
+
+            let startDate = new Date();
+            startDate.setDate(startDate.getDate()-1);
             $('#calendar').datepicker({
+                startDate: startDate,
+                maxViewMode: 0,
                 todayHighlight: true,
+                language: "fr",
                 daysOfWeekDisabled: [0],
                 weekStart: 1,
-                format: "yyyy-mm-dd",
-                datesDisabled: ["2017/10/20", "2017/11/21","2017/12/21", "2018/01/21","2018/02/21","2018/03/21"],
+                format: "dd-mm-yyyy",
+            }).on('changeDate', function (e) {
+                console.log(e.date.toISOString());
+                updateHours(e.date.toISOString());
+                document.getElementById('create_appointment[date]').value = e.date.toISOString();
             });
         </script>
     {% endblock %}

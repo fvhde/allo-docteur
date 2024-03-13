@@ -1,3 +1,6 @@
+import './bootstrap.js';
+import './js/detail/specialities.js'
+import './js/detail/hours.js'
 /*
  * Welcome to your app's main JavaScript file!
  *

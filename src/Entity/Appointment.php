@@ -25,7 +25,12 @@ class Appointment
     #[ORM\Column(type: 'datetime')]
     #[Assert\NotBlank(groups: ['ap_create'])]
     #[Groups(['ap_create', 'ap_list', 'ap_detail'])]
-    private \DateTimeInterface $date;
+    private \DateTimeInterface $beginAt;
+
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    #[Assert\NotBlank(groups: ['ap_create'])]
+    #[Groups(['ap_create', 'ap_list', 'ap_detail'])]
+    private ?\DateTimeInterface $endAt = null;
 
     #[ORM\Column(type: 'string', length: 100)]
     #[Assert\NotBlank(groups: ['ap_create'])]
@@ -37,28 +42,33 @@ class Appointment
     #[ORM\JoinColumn(name: 'place_id', referencedColumnName: 'id')]
     #[Assert\NotBlank(groups: ['ap_create'])]
     #[Groups(['ap_create', 'ap_list', 'ap_detail'])]
-    private Place $place;
+    private ?Place $place = null;
 
     #[ORM\ManyToOne(targetEntity: Professional::class)]
     #[ORM\JoinColumn(name: 'professional_id', referencedColumnName: 'id')]
     #[Assert\NotBlank(groups: ['ap_create'])]
     #[Groups(['ap_create', 'ap_detail'])]
-    private Professional $professional;
+    private ?Professional $professional = null;
 
-    #[ORM\ManyToOne(targetEntity: Patient::class)]
+    #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(name: 'patient_id', referencedColumnName: 'id')]
     #[Assert\NotBlank(groups: ['ap_create'])]
     #[Groups(['ap_create', 'ap_detail'])]
-    private Patient $patient;
+    private ?User $patient = null;
 
     #[ORM\ManyToOne(targetEntity: Speciality::class)]
     #[ORM\JoinColumn(name: 'speciality_id', referencedColumnName: 'id')]
     #[Groups(['ap_create', 'ap_detail'])]
-    private Speciality $speciality;
+    private ?Speciality $speciality = null;
 
     public function __construct()
     {
         $this->status = StatusEnum::CREATED->value;
+    }
+
+    public function __toString(): string
+    {
+        return (string) $this->id;
     }
 
     public function getId(): ?string
@@ -66,19 +76,31 @@ class Appointment
         return $this->id;
     }
 
-    public function getDate(): ?\DateTimeInterface
+    public function getBeginAt(): ?\DateTimeInterface
     {
-        return $this->date;
+        return $this->beginAt;
     }
 
-    public function setDate(\DateTimeInterface $date): self
+    public function setBeginAt(\DateTimeInterface $beginAt): self
     {
-        $this->date = $date;
+        $this->beginAt = $beginAt;
 
         return $this;
     }
 
-    public function getPlace(): Place
+    public function getEndAt(): ?\DateTimeInterface
+    {
+        return $this->endAt;
+    }
+
+    public function setEndAt(?\DateTimeInterface $endAt): Appointment
+    {
+        $this->endAt = $endAt;
+
+        return $this;
+    }
+
+    public function getPlace(): ?Place
     {
         return $this->place;
     }
@@ -90,7 +112,7 @@ class Appointment
         return $this;
     }
 
-    public function getProfessional(): Professional
+    public function getProfessional(): ?Professional
     {
         return $this->professional;
     }
@@ -102,19 +124,19 @@ class Appointment
         return $this;
     }
 
-    public function getPatient(): Patient
+    public function getPatient(): ?User
     {
         return $this->patient;
     }
 
-    public function setPatient(Patient $patient): Appointment
+    public function setPatient(User $patient): Appointment
     {
         $this->patient = $patient;
 
         return $this;
     }
 
-    public function getSpeciality(): Speciality
+    public function getSpeciality(): ?Speciality
     {
         return $this->speciality;
     }

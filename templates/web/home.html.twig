@@ -1,47 +1,34 @@
 {% extends 'web/layout.html.twig' %}
 
+{% block page_title %}Tibse{% endblock %}
 {% block main %}
 <div class="hero_home version_1">
     <div class="content">
-        <h3>Find a Doctor!</h3>
+        <h3>Trouvez un médecin!</h3>
         <p>
             Ridiculus sociosqu cursus neque cursus curae ante scelerisque vehicula.
         </p>
-        <form method="post" action="{{ path('app_search_professionals') }}">
-            <div id="custom-search-input">
+            {{ form_start(form) }}
+            <div id="custom-search-input" style="width: 450px !important;">
                 <div class="input-group">
                     <table>
                         <tbody>
                             <tr>
                                 <td>
-                                    <input type="text" name="term" class="search-query" placeholder="Ex. Name, Specialization ....">
+                                    {{ form_row(form.speciality) }}
                                 </td>
                                 <td>
-                                    <input type="text" name="location" class="search-query" placeholder="Where ?">
+                                    {{ form_row(form.city) }}
                                 </td>
                                 <td>
-                                    <input type="submit" class="btn_search" value="Search">
+                                    <input type="submit" class="btn_search" style="position: relative; height: 38px;" value="Search">
                                 </td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
-                <ul>
-                    <li>
-                        <input type="radio" id="all" name="radio_search" value="all" checked>
-                        <label for="all">All</label>
-                    </li>
-                    <li>
-                        <input type="radio" id="doctor" name="radio_search" value="doctor">
-                        <label for="doctor">Doctor</label>
-                    </li>
-                    <li>
-                        <input type="radio" id="clinic" name="radio_search" value="clinic">
-                        <label for="clinic">Specialities</label>
-                    </li>
-                </ul>
             </div>
-        </form>
+            {{ form_end(form) }}
     </div>
 </div>
 <!-- /Hero -->

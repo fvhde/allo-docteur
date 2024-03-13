@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\Web;
 
 use App\Entity\Patient;
-use App\Form\Type\PatientType;
+use App\Form\Web\Type\PatientType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;

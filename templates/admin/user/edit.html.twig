@@ -1,0 +1,204 @@
+{% extends 'bundles/EasyAdminBundle/layout.html.twig' %}
+
+{% block content_title %}Edit Profile{% endblock %}
+{% block main %}
+    {{ form_start(form) }}
+        <section class="content-header">
+            <div class="content-header-title">
+            </div>
+
+            <div class="page-actions">
+                <button class="action-saveAndReturn btn btn-primary action-save" type="submit" value="{{ field_name(form.save) }}">
+                    <span class="btn-label"><span class="action-label">Sauvegarder</span></span>
+                </button>
+
+            </div>
+        </section>
+        <div class="box_general padding_bottom">
+            <div class="header_box version_2">
+                <h2><i class="fa fa-file"></i>Basic info</h2>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input type="text" name="{{ field_name(form.firstName) }}" value="{{ field_value(form.firstName) }}" placeholder="{{ field_label(form.firstName) }}"  class="form-control">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Last name</label>
+                        <input type="text" class="form-control" name="{{ field_name(form.lastName) }}" value="{{ field_value(form.lastName) }}" placeholder="{{ field_label(form.lastName) }}">
+                    </div>
+                </div>
+            </div>
+            <!-- /row-->
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" class="form-control" name="{{ field_name(form.email) }}" value="{{ field_value(form.email) }}" placeholder="{{ field_label(form.email) }}">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Birthday</label>
+                        <input type="date" class="form-control" name="{{ field_name(form.birthday) }}" value="{{ field_value(form.birthday) }}" placeholder="{{ field_label(form.birthday) }}">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Gender</label>
+                        <select name="{{ field_name(form.gender) }}" class="form-control">
+                            {% for label, value in field_choices(form.gender) %}
+                                <option value="{{ value }}">{{ label }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <!-- /row-->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Profile picture</label>
+                        <div>
+                            <img src="{{ form.vars.data.avatar ? asset(form.vars.data.avatar) : 'https://www.floresdevida.org/wp-content/uploads/2018/06/default-user-thumbnail-1.png' }}" class="img img-responsive img-preview thumbnail" width="200" height="200"/>
+                        </div>
+                        <input type="file" class="form-control" name="{{ field_name(form.avatar) }}" value="{{ field_value(form.avatar) }}">
+                    </div>
+                </div>
+            </div>
+            <!-- /row-->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Description</label>
+                        <input type="text" class="form-control" name="{{ field_name(form.description) }}" value="{{ field_value(form.description) }}" placeholder="{{ field_label(form.description) }}" >
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="box_general padding_bottom">
+            <div class="header_box version_2">
+                <h2><i class="fa fa-clock"></i>Horaires</h2>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <h6>Horaires de disponibilité</h6>
+                        <div class="row">
+                            <div class="col-md-1">
+                                <div class="form-group">
+                                    <input type="checkbox" name="{{ field_name(form.hours.0.opened) }}" {% if form.hours.0.vars.value.opened %} checked {% endif %}>
+                                    <label>Lundi</label>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <input type="time" name="{{ field_name(form.hours.0.from_time) }}" value="{{ field_value(form.hours.0.from_time) }}">
+                                     à
+                                    <input type="time" name="{{ field_name(form.hours.0.to_time) }}" value="{{ field_value(form.hours.0.to_time) }}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-1">
+                                <div class="form-group">
+                                    <input type="checkbox" name="{{ field_name(form.hours.1.opened) }}" {% if form.hours.1.vars.value.opened %} checked {% endif %}>
+                                    <label>Mardi</label>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <input type="time" name="{{ field_name(form.hours.1.from_time) }}" value="{{ field_value(form.hours.1.from_time) }}">
+                                     à
+                                    <input type="time" name="{{ field_name(form.hours.1.to_time) }}" value="{{ field_value(form.hours.1.to_time) }}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-1">
+                                <div class="form-group">
+                                    <input type="checkbox" name="{{ field_name(form.hours.2.opened) }}" {% if form.hours.2.vars.value.opened %} checked {% endif %}>
+                                    <label>Mercredi</label>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <input type="time" name="{{ field_name(form.hours.2.from_time) }}" value="{{ field_value(form.hours.2.from_time) }}">
+                                     à
+                                    <input type="time" name="{{ field_name(form.hours.2.to_time) }}" value="{{ field_value(form.hours.2.to_time) }}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-1">
+                                <div class="form-group">
+                                    <input type="checkbox" name="{{ field_name(form.hours.3.opened) }}" {% if form.hours.3.vars.value.opened %} checked {% endif %}>
+                                    <label>jeudi</label>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <input type="time" name="{{ field_name(form.hours.3.from_time) }}" value="{{ field_value(form.hours.3.from_time) }}">
+                                     à
+                                    <input type="time" name="{{ field_name(form.hours.3.to_time) }}" value="{{ field_value(form.hours.3.to_time) }}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-1">
+                                <div class="form-group">
+                                    <input type="checkbox" name="{{ field_name(form.hours.4.opened) }}" {% if form.hours.4.vars.value.opened %} checked {% endif %}>
+                                    <label>Vendredi</label>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <input type="time" name="{{ field_name(form.hours.4.from_time) }}" value="{{ field_value(form.hours.4.from_time) }}">
+                                     à
+                                    <input type="time" name="{{ field_name(form.hours.4.to_time) }}" value="{{ field_value(form.hours.4.to_time) }}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-1">
+                                <div class="form-group">
+                                    <input type="checkbox" name="{{ field_name(form.hours.5.opened) }}" {% if form.hours.5.vars.value.opened %} checked {% endif %}>
+                                    <label>Samedi</label>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <input type="time" name="{{ field_name(form.hours.5.from_time) }}" value="{{ field_value(form.hours.5.from_time) }}">
+                                     à
+                                    <input type="time" name="{{ field_name(form.hours.5.to_time) }}" value="{{ field_value(form.hours.5.to_time) }}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-1">
+                                <div class="form-group">
+                                    <input type="checkbox" name="{{ field_name(form.hours.6.opened) }}" {% if form.hours.6.vars.value.opened %} checked {% endif %}>
+                                    <label>Dimanche</label>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <input type="time" name="{{ field_name(form.hours.6.from_time) }}" value="{{ field_value(form.hours.6.from_time) }}">
+                                     à
+                                    <input type="time" name="{{ field_name(form.hours.6.to_time) }}" value="{{ field_value(form.hours.6.to_time) }}">
+                                </div>
+                            </div>
+                        </div>
+                </div>
+            </div>
+            <!-- /row-->
+        </div>
+    {{ form_end(form) }}
+
+{% endblock %}
+{% block body_javascript %}
+{% endblock body_javascript %}

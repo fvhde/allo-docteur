@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Appointment;
+use App\Entity\Professional;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -37,6 +38,22 @@ class AppointmentRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    public function findByProfessionalAndDay(Professional $professional, \DateTimeInterface $day): array
+    {
+        return $this->createQueryBuilder('a')
+            ->leftJoin('a.professional', 'p')
+            ->where('p = :professional')
+            ->andWhere('a.beginAt BETWEEN :start AND :end')
+            ->setParameters([
+                'professional' => $professional,
+                'start' => (clone $day)->setTime(0, 0),
+                'end' => (clone $day)->setTime(23, 59),
+            ])
+            ->getQuery()
+            ->getResult()
+        ;
     }
 
 //    /**
